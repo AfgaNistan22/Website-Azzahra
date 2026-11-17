@@ -1,3 +1,4 @@
+
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -8,26 +9,40 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            if (!Schema::hasColumn('users', 'provider')) {
+        // Tambahkan provider jika belum tersedia
+        if (!Schema::hasColumn('users', 'provider')) {
+            Schema::table('users', function (Blueprint $table) {
                 $table->string('provider', 30)->nullable();
-            }
-            if (!Schema::hasColumn('users', 'provider_id')) {
+            });
+        }
+
+        // Tambahkan provider_id jika belum tersedia
+        if (!Schema::hasColumn('users', 'provider_id')) {
+            Schema::table('users', function (Blueprint $table) {
                 $table->string('provider_id')->nullable();
-            }
-            if (!Schema::hasColumn('users', 'avatar')) {
+            });
+        }
+
+        // Tambahkan avatar jika belum tersedia
+        if (!Schema::hasColumn('users', 'avatar')) {
+            Schema::table('users', function (Blueprint $table) {
                 $table->string('avatar', 500)->nullable();
-            }
-        });
+            });
+        }
 
-        // Akun sosial belum punya nomor telepon.
-        // (Laravel 10 ke bawah: jalankan `composer require doctrine/dbal` dulu.)
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('phone', 20)->nullable()->change();
-        });
+        // Buat kolom phone jika belum tersedia
+        if (!Schema::hasColumn('users', 'phone')) {
+            Schema::table('users', function (Blueprint $table) {
+                $table->string('phone', 20)->nullable();
+            });
+        }
 
+        // Tambahkan unique provider dan provider_id
         Schema::table('users', function (Blueprint $table) {
-            $table->unique(['provider', 'provider_id'], 'users_provider_unique');
+            $table->unique(
+                ['provider', 'provider_id'],
+                'users_provider_unique'
+            );
         });
     }
 
@@ -35,7 +50,14 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropUnique('users_provider_unique');
-            $table->dropColumn(['provider', 'provider_id', 'avatar']);
         });
+
+        foreach (['provider', 'provider_id', 'avatar', 'phone'] as $column) {
+            if (Schema::hasColumn('users', $column)) {
+                Schema::table('users', function (Blueprint $table) use ($column) {
+                    $table->dropColumn($column);
+                });
+            }
+        }
     }
 };
