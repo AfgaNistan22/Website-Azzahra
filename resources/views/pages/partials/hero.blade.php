@@ -99,7 +99,7 @@
                     <div class="hx-photo">
                         <img src="{{ asset('template/img/slider1.JPG') }}"
                              alt="Suasana perawatan Azzahra Salon &amp; Spa Muslimah"
-                             onerror="this.onerror=null; this.src='{{ asset('template/img/service-default.jpg') }}';">
+                             onerror="this.onerror=null; this.src='{{ asset('template/img/slider2.jpg') }}';">
                     </div>
 
                     <div class="hx-chip hx-chip-1">
