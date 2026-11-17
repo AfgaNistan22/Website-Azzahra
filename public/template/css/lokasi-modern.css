@@ -1,0 +1,114 @@
+/* =========================================================
+   LOKASI KAMI, pelengkap tema maroon
+   Dimuat SETELAH booking-list-modern.css. Prefix: lo-
+========================================================= */
+
+.bkl-page .bkl-btn-line { border: 1px solid var(--line-strong); background: #fff; color: var(--maroon); }
+.bkl-page .bkl-btn-line:hover { background: var(--maroon); border-color: var(--maroon); color: #fff; transform: translateY(-3px); }
+.bkl-page .bkl-btn-ghost { border: 1px solid rgba(255, 255, 255, .4); background: rgba(255, 255, 255, .08); color: #fff; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+.bkl-page .bkl-btn-ghost:hover { background: rgba(255, 255, 255, .2); color: #fff; transform: translateY(-3px); }
+
+html { scroll-behavior: smooth; }
+.bkl-page .bkl-content { padding-top: 64px; }
+
+/* ---------- status buka / tutup ---------- */
+.lo-status {
+    display: inline-flex; align-items: center; gap: 10px; padding: 8px 16px 8px 14px; border: 1px solid rgba(233, 201, 209, .35); border-radius: 999px;
+    background: rgba(255, 255, 255, .1); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: #fff; font-size: 12.5px; font-weight: 600;
+}
+.lo-status-dot { position: relative; flex-shrink: 0; width: 9px; height: 9px; border-radius: 50%; background: #8d7c82; }
+.lo-status.is-open .lo-status-dot { background: #4ADE80; }
+.lo-status.is-open .lo-status-dot::after { content: ""; position: absolute; inset: -5px; border-radius: 50%; border: 2px solid #4ADE80; animation: lo-ping 1.8s ease-out infinite; }
+.lo-status.is-closed .lo-status-dot { background: #F59FA8; }
+.lo-status.is-light { border-color: var(--line-strong); background: var(--cream); color: var(--deep); -webkit-backdrop-filter: none; backdrop-filter: none; }
+.lo-status.is-light.is-open { border-color: #C6E3D3; background: #E6F4EC; color: #1F7A55; }
+.lo-status.is-light.is-closed { border-color: #F0C8CD; background: #FBE9EB; color: #8E2430; }
+@keyframes lo-ping { 0% { transform: scale(.5); opacity: .9; } 100% { transform: scale(1.7); opacity: 0; } }
+
+.lo-hero-top { margin-bottom: 22px; animation: bkl-rise 1s .05s var(--ease) both; }
+.lo-hero-btns { display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* pin berdenyut di hero */
+.bkl-page .lo-pin { position: relative; }
+.lo-pin::before, .lo-pin::after { content: ""; position: absolute; inset: 0; border-radius: 50%; border: 1px solid rgba(240, 203, 214, .5); animation: lo-wave 3.6s ease-out infinite; }
+.lo-pin::after { animation-delay: 1.8s; }
+@keyframes lo-wave { 0% { transform: scale(1); opacity: .9; } 100% { transform: scale(2.4); opacity: 0; } }
+
+/* ---------- judul bagian ---------- */
+.lo-head { max-width: 720px; margin-bottom: 34px; }
+.lo-title { margin: 0 0 12px; color: var(--deep); font-family: var(--display); font-size: clamp(26px, 3.6vw, 38px); font-weight: 600; letter-spacing: -.01em; line-height: 1.2; }
+.lo-sub { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.85; }
+
+/* ---------- kartu + peta ---------- */
+.lo-layout { display: grid; grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); align-items: stretch; gap: 24px; }
+.lo-card { padding: 36px 34px; border: 1px solid var(--line); border-radius: 30px; background: #fff; box-shadow: var(--shadow); }
+.lo-place { display: inline-block; margin-bottom: 10px; padding: 4px 14px; border: 1px solid #F0DDB0; border-radius: 999px; background: #FBF1DC; color: #94620F; font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+.lo-card h3 { margin: 0 0 16px; color: var(--deep); font-family: var(--display); font-size: 28px; font-weight: 600; line-height: 1.2; }
+
+.lo-row { display: flex; align-items: flex-start; gap: 16px; padding: 22px 0; border-top: 1px dashed var(--line-strong); }
+.lo-row-icon { display: grid; flex-shrink: 0; width: 46px; height: 46px; place-items: center; border: 1px solid var(--line-strong); border-radius: 50%; background: var(--tint); color: var(--maroon); font-size: 16px; transition: background .35s ease, color .35s ease, transform .6s var(--ease); }
+.lo-row:hover .lo-row-icon { background: var(--maroon); color: #fff; transform: rotate(360deg); }
+.lo-row strong { display: block; margin-bottom: 6px; color: var(--muted); font-size: 11.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+.lo-row p { margin: 0 0 12px; color: var(--deep); font-size: 15px; font-weight: 600; line-height: 1.75; }
+
+.lo-copy {
+    display: inline-flex; align-items: center; gap: 8px; height: 38px; padding: 0 16px; border: 1px solid var(--line-strong); border-radius: 999px; background: #fff; color: var(--maroon);
+    font: inherit; font-size: 12.5px; font-weight: 700; cursor: pointer; transition: background .3s ease, color .3s ease, transform .3s var(--ease);
+}
+.lo-copy:hover { background: var(--maroon); border-color: var(--maroon); color: #fff; transform: translateY(-2px); }
+.lo-copy.is-copied { border-color: #C6E3D3; background: #E6F4EC; color: #1F7A55; }
+
+.lo-hours { width: 100%; border-collapse: collapse; }
+.lo-hours th, .lo-hours td { padding: 10px 14px; font-size: 14px; text-align: left; }
+.lo-hours th { color: var(--muted); font-weight: 600; }
+.lo-hours td { color: var(--deep); font-weight: 700; text-align: right; }
+.lo-hours tr.is-today { background: var(--tint); }
+.lo-hours tr.is-today th { border-radius: 14px 0 0 14px; color: var(--maroon); }
+.lo-hours tr.is-today td { border-radius: 0 14px 14px 0; color: var(--maroon); }
+.lo-today-tag { margin-left: 10px; padding: 3px 9px; border-radius: 999px; background: var(--grad); color: #fff; font-size: 9.5px; font-weight: 700; letter-spacing: .08em; vertical-align: middle; }
+
+.lo-actions { padding-top: 22px; border-top: 1px dashed var(--line-strong); }
+.lo-actions .bkl-btn { width: 100%; }
+
+.lo-map { position: relative; min-height: 460px; overflow: hidden; border: 1px solid var(--line); border-radius: 30px; background: var(--tint); box-shadow: var(--shadow); }
+.lo-map iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.lo-map-open {
+    position: absolute; z-index: 2; left: 18px; bottom: 18px; display: inline-flex; align-items: center; gap: 10px; padding: 11px 20px; border-radius: 999px; background: #fff; color: var(--maroon);
+    font-size: 12.5px; font-weight: 700; text-decoration: none; box-shadow: var(--shadow-hover); transition: background .3s ease, color .3s ease, transform .4s var(--ease);
+}
+.lo-map-open:hover { background: var(--maroon); color: #fff; transform: translateY(-3px); }
+
+.lo-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ---------- penutup ---------- */
+.lo-band { position: relative; isolation: isolate; overflow: hidden; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 28px; margin: 72px 0 20px; padding: 54px 52px; border-radius: 32px; background: var(--deep); color: #fff; }
+.lo-band::before {
+    content: ""; position: absolute; z-index: -1; inset: -30%;
+    background: radial-gradient(40% 44% at 14% 26%, rgba(168, 71, 106, .7), transparent 70%), radial-gradient(34% 38% at 88% 22%, rgba(124, 36, 65, .75), transparent 70%), radial-gradient(46% 50% at 64% 96%, rgba(100, 23, 45, .9), transparent 70%);
+    filter: blur(30px); animation: bkl-drift 16s ease-in-out infinite alternate;
+}
+.lo-band-flower { position: absolute; z-index: -1; right: 4%; top: 50%; color: #fff; font-size: 160px; line-height: 1; opacity: .07; translate: 0 -50%; animation: bkl-spin 50s linear infinite; }
+.lo-band h2 { margin: 0 0 10px; color: #fff; font-family: var(--display); font-size: clamp(26px, 3.6vw, 38px); font-weight: 600; line-height: 1.2; }
+.lo-band p { max-width: 440px; margin: 0; color: rgba(255, 255, 255, .78); font-size: 15.5px; line-height: 1.8; }
+.lo-band-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* ---------- konfeti ---------- */
+.lo-confetti { position: fixed; z-index: 99999; pointer-events: none; font-size: 18px; line-height: 1; }
+
+/* ---------- responsif ---------- */
+@media (max-width: 1020px) {
+    .lo-layout { grid-template-columns: 1fr; }
+    .lo-map { min-height: 360px; }
+    .lo-band { padding: 44px 34px; }
+}
+@media (max-width: 640px) {
+    .lo-card { padding: 28px 20px; border-radius: 24px; }
+    .lo-map { min-height: 300px; border-radius: 24px; }
+    .lo-hero-btns .bkl-btn, .lo-band-actions .bkl-btn { width: 100%; }
+    .lo-band { padding: 38px 22px; border-radius: 26px; }
+    .lo-hours th, .lo-hours td { padding: 10px 8px; font-size: 13px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .lo-pin::before, .lo-pin::after, .lo-band::before, .lo-band-flower, .lo-status.is-open .lo-status-dot::after { animation: none; }
+}

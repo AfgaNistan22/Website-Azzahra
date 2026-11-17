@@ -1,0 +1,76 @@
+/* =========================================================
+   DETAIL LAYANAN, pelengkap tema maroon
+   Dimuat SETELAH booking-list-modern.css. Prefix: dt-
+========================================================= */
+
+.bkl-page .bkl-content { padding-top: 56px; }
+.bkl-page .bkl-btn-light, .bkl-page .bkl-btn-maroon { text-decoration: none; }
+
+/* ---------- hero ---------- */
+.dt-crumb { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 22px; color: rgba(255, 255, 255, .75); font-size: 12.5px; font-weight: 600; }
+.dt-crumb a { color: #fff; text-decoration: none; opacity: .85; transition: opacity .3s ease; }
+.dt-crumb a:hover { color: #fff; opacity: 1; text-decoration: underline; }
+.dt-crumb i.fa-chevron-right { font-size: 8px; opacity: .6; }
+.dt-crumb span { max-width: 240px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dt-h1 { margin: 18px 0 18px; color: #fff; font-family: var(--display); font-size: clamp(34px, 5vw, 58px); font-weight: 600; letter-spacing: -.02em; line-height: 1.12; }
+.dt-cat { display: inline-flex; align-items: center; gap: 9px; padding: 8px 18px; border: 1px solid rgba(233, 201, 209, .4); border-radius: 999px; background: rgba(255, 255, 255, .12); color: #fff; font-size: 13px; font-weight: 600; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+
+/* ---------- kartu utama ---------- */
+.dt-card { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); overflow: hidden; border: 1px solid var(--line); border-radius: 34px; background: #fff; box-shadow: var(--shadow-hover); }
+
+.dt-image { position: relative; min-height: 520px; overflow: hidden; background: var(--tint); }
+.dt-image img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
+.dt-card:hover .dt-image img { transform: scale(1.05); }
+.dt-image::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgba(42, 7, 17, .6)); pointer-events: none; }
+.dt-ph { position: absolute; inset: 0; align-items: center; justify-content: center; background: var(--grad); color: rgba(255, 255, 255, .85); font-size: 80px; }
+.dt-image-label { position: absolute; z-index: 2; left: 20px; top: 20px; display: inline-flex; align-items: center; gap: 9px; padding: 8px 16px; border: 1px solid rgba(255, 255, 255, .6); border-radius: 999px; background: rgba(255, 255, 255, .9); color: var(--maroon); font-size: 12px; font-weight: 700; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+.dt-image-caption { position: absolute; z-index: 2; left: 24px; right: 24px; bottom: 22px; color: #fff; font-family: var(--display); font-size: 17px; font-style: italic; letter-spacing: .02em; }
+
+/* ---------- info ---------- */
+.dt-info { display: flex; flex-direction: column; gap: 22px; padding: 40px 42px; }
+.dt-intro { margin: 0; color: var(--muted); font-size: 15.5px; line-height: 1.9; }
+
+.dt-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.dt-meta-item { display: flex; align-items: center; gap: 14px; padding: 16px 18px; border: 1px solid var(--line); border-radius: 22px; background: var(--cream); transition: transform .4s var(--ease), border-color .3s ease; }
+.dt-meta-item:hover { transform: translateY(-3px); border-color: var(--line-strong); }
+.dt-meta-icon { display: grid; flex-shrink: 0; width: 46px; height: 46px; place-items: center; border-radius: 50%; background: var(--tint); color: var(--maroon); font-size: 16px; }
+.dt-meta-item small { display: block; color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+.dt-meta-item strong { color: var(--deep); font-size: 15px; font-weight: 700; }
+
+.dt-desc h3 { display: flex; align-items: center; gap: 10px; margin: 0 0 10px; color: var(--deep); font-family: var(--display); font-size: 21px; font-weight: 600; }
+.dt-desc h3 i { color: var(--maroon-2); font-size: 14px; }
+.dt-desc p { margin: 0; color: var(--text); font-size: 15px; line-height: 1.9; white-space: pre-line; }
+
+.dt-price { position: relative; overflow: hidden; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 24px 28px; border-radius: 26px; background: var(--grad); color: #fff; }
+.dt-price-label { display: flex; align-items: center; gap: 8px; color: #E9C9D1; font-size: 11.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+.dt-price strong { display: block; margin: 6px 0; font-family: var(--num); font-size: 40px; font-weight: 700; letter-spacing: -.03em; line-height: 1.1; }
+.dt-price strong small { margin-right: 6px; font-size: 18px; font-weight: 600; opacity: .85; }
+.dt-price-note { display: flex; align-items: center; gap: 7px; color: rgba(255, 255, 255, .8); font-size: 12.5px; }
+.dt-price-deco { position: absolute; right: 22px; top: 50%; font-size: 90px; opacity: .1; translate: 0 -50%; animation: bkl-spin 50s linear infinite; }
+
+.dt-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.dt-actions .bkl-btn-maroon { flex: 1 1 220px; justify-content: center; }
+.dt-back { border: 1px solid var(--line-strong); background: #fff; color: var(--maroon); }
+.dt-back:hover { background: var(--maroon); border-color: var(--maroon); color: #fff; transform: translateY(-3px); text-decoration: none; }
+
+.dt-note { display: flex; align-items: center; gap: 14px; padding: 16px 18px; border: 1px dashed var(--line-strong); border-radius: 20px; background: var(--tint-2); color: var(--muted); font-size: 13px; line-height: 1.7; }
+.dt-note i { flex-shrink: 0; color: var(--maroon-2); font-size: 22px; }
+
+/* ---------- responsif ---------- */
+@media (max-width: 1020px) {
+    .dt-card { grid-template-columns: 1fr; }
+    .dt-image { min-height: 340px; }
+}
+@media (max-width: 640px) {
+    .dt-card { border-radius: 26px; }
+    .dt-image { min-height: 260px; }
+    .dt-info { padding: 28px 20px; }
+    .dt-meta { grid-template-columns: 1fr; }
+    .dt-price { padding: 22px 20px; }
+    .dt-price strong { font-size: 34px; }
+    .dt-actions .bkl-btn { width: 100%; justify-content: center; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .dt-image img { transition: none; }
+    .dt-price-deco { animation: none; }
+}

@@ -1,0 +1,219 @@
+/* =========================================================
+   BUAT BOOKING, tema maroon yang elegan
+   Dimuat SETELAH booking-list-modern.css (memakai variabel
+   .bkl-page dan komponen hero/alert/kicker/btn miliknya).
+   Menata ulang class lama (card-elite, treatment-*, dst) agar
+   markup dan JavaScript form tidak perlu berubah.
+========================================================= */
+
+.bkl-page .fw-bold, .bkl-page .font-weight-bold { font-weight: 700; }
+.bkl-page .text-muted-elite { color: var(--muted); }
+.bkl-page .text-maroon-elite { color: #B3303C; }
+.bkl-page .small { font-size: 12.5px; }
+.bkl-page .bkl-content { padding-bottom: 20px; }
+.bkl-page .d-none { display: none !important; }
+
+/* ---------- notifikasi ---------- */
+.bkc-alert {
+    position: relative; margin-bottom: 22px; padding: 16px 54px 16px 20px;
+    border: 1px solid transparent; border-radius: 18px; line-height: 1.6; font-size: 13.5px;
+    animation: bkl-drop .7s var(--ease) both;
+}
+.bkc-alert ul { margin: 6px 0 0; padding-left: 18px; }
+.bkc-alert-title { margin-bottom: 4px; font-weight: 700; }
+.bkc-alert-danger { border-color: rgba(179, 48, 60, .25); background: #FDF0F1; color: #7A1F2A; }
+.bkc-alert-warning { border-color: #F0DDB0; background: #FBF1DC; color: #7A5210; }
+.bkc-alert-gold { border-color: #E9D3A0; background: linear-gradient(135deg, #FBF3E1, #FCF8F6); color: #6B4A10; }
+.bkc-alert .bkl-alert-close { top: 18px; margin-top: 0; }
+
+/* ---------- kartu ---------- */
+.bkl-page .card-elite {
+    position: relative; overflow: hidden; border: 1px solid var(--line); border-radius: 26px; background: #fff; box-shadow: var(--shadow);
+}
+.bkl-page .card-header-elite { padding: 20px 28px; border-bottom: 1px solid var(--line); background: linear-gradient(135deg, var(--tint-2), #fff); }
+.bkl-page .section-title-elite-inline { margin: 0; color: var(--deep); font-family: var(--display); font-size: 20px; font-weight: 600; letter-spacing: -.005em; }
+.bkl-page .section-title-elite-inline i {
+    display: inline-grid; width: 34px; height: 34px; place-items: center; margin-right: 10px !important; border: 1px solid var(--line-strong); border-radius: 50%;
+    background: var(--tint); color: var(--maroon); font-size: 13px; vertical-align: middle;
+}
+.bkl-page .card-header-elite small { display: block; margin-top: 4px; margin-left: 44px; font-size: 12.5px; }
+.bkl-page .card-header-elite .d-flex > div > small { margin-left: 44px; }
+
+.bkl-page .count-badge-elite, .bkl-page .count-pill-elite {
+    display: inline-flex; align-items: center; justify-content: center; min-width: 28px; padding: 6px 14px;
+    border: 1px solid var(--line-strong); border-radius: 999px; background: #fff; color: var(--maroon); font-size: 12px; font-weight: 700; white-space: nowrap;
+}
+.bkl-page .count-pill-elite { padding: 3px 10px; background: var(--tint); }
+
+.bkl-page .info-box-elite {
+    padding: 13px 16px; border: 1px solid var(--line); border-radius: 16px; background: var(--tint-2); color: var(--maroon); font-size: 13px; line-height: 1.6;
+}
+.bkl-page .info-box-elite i { color: var(--maroon-2); }
+
+/* ---------- form ---------- */
+.bkl-page .form-label-elite { display: block; margin-bottom: 8px; color: var(--deep); font-size: 12.5px; font-weight: 700; letter-spacing: .02em; }
+.bkl-page .input-group-elite {
+    display: flex; align-items: stretch; overflow: hidden; border: 1px solid var(--line-strong); border-radius: 16px; background: var(--cream);
+    transition: border-color .3s ease, box-shadow .3s ease, background .3s ease;
+}
+.bkl-page .input-group-elite:focus-within { border-color: var(--maroon-2); background: #fff; box-shadow: 0 0 0 4px rgba(124, 36, 65, .10); }
+.bkl-page .input-group-elite:has(.is-invalid) { border-color: #B3303C; }
+.bkl-page .input-icon-box-elite { display: grid; flex-shrink: 0; width: 48px; place-items: center; border-right: 1px solid var(--line); background: var(--tint); color: var(--maroon); font-size: 14px; }
+.bkl-page .form-control-elite {
+    width: 100%; min-width: 0; height: 48px; padding: 0 16px; border: 0; background: transparent; color: var(--text); font: inherit; font-size: 14px; outline: 0; box-shadow: none;
+}
+.bkl-page .form-control-elite[readonly] { color: var(--muted); }
+.bkl-page textarea.form-control-elite {
+    height: auto; padding: 14px 16px; border: 1px solid var(--line-strong); border-radius: 16px; background: var(--cream); line-height: 1.7; resize: vertical;
+    transition: border-color .3s ease, box-shadow .3s ease;
+}
+.bkl-page textarea.form-control-elite:focus { border-color: var(--maroon-2); background: #fff; box-shadow: 0 0 0 4px rgba(124, 36, 65, .10); }
+
+/* ---------- filter ---------- */
+.bkl-page .treatment-filter-wrapper { padding: 16px 18px; border: 1px solid var(--line); border-radius: 20px; background: var(--cream); }
+.bkl-page .treatment-filter-select { min-width: 230px; }
+.bkl-page .treatment-filter-select select {
+    width: 100%; height: 44px; padding: 0 14px; border: 1px solid var(--line-strong); border-radius: 999px; background: #fff; color: var(--maroon); font: inherit; font-size: 13px; font-weight: 600;
+}
+.bkl-page .treatment-filter-select select:focus { outline: 0; border-color: var(--maroon-2); box-shadow: 0 0 0 4px rgba(124, 36, 65, .10); }
+
+/* ---------- slider perawatan ---------- */
+.bkl-page .treatment-slider-wrapper { position: relative; }
+.bkl-page .treatment-slider { overflow-x: auto; padding: 8px 4px 14px; scroll-behavior: smooth; scrollbar-width: none; }
+.bkl-page .treatment-slider::-webkit-scrollbar { display: none; }
+.bkl-page .treatment-slider-track { display: flex; gap: 14px; }
+.bkl-page .treatment-slide { flex: 0 0 190px; min-width: 0; }
+.bkl-page .treatment-empty-slide { width: 100%; }
+
+.bkl-page .treatment-slider-btn {
+    position: absolute; z-index: 3; top: 42%; display: flex; width: 42px; height: 42px; align-items: center; justify-content: center;
+    border: 1px solid var(--line-strong); border-radius: 50%; background: #fff; color: var(--maroon); box-shadow: var(--shadow); cursor: pointer;
+    transition: background .3s ease, color .3s ease, transform .4s var(--ease), opacity .3s ease;
+}
+.bkl-page .treatment-slider-prev { left: -14px; }
+.bkl-page .treatment-slider-next { right: -14px; }
+.bkl-page .treatment-slider-btn:hover:not(:disabled) { background: var(--maroon); color: #fff; transform: scale(1.1); }
+.bkl-page .treatment-slider-btn:disabled { opacity: .35; cursor: not-allowed; }
+
+.bkl-page .treatment-item { position: relative; height: 100%; }
+.bkl-page .treatment-checkbox { position: absolute; opacity: 0; pointer-events: none; }
+.bkl-page .treatment-card {
+    position: relative; display: flex; flex-direction: column; height: 100%; margin: 0; overflow: hidden; border: 1px solid var(--line); border-radius: 22px; background: #fff; cursor: pointer;
+    transition: transform .45s var(--ease), border-color .3s ease, box-shadow .45s var(--ease);
+}
+.bkl-page .treatment-card:hover { transform: translateY(-5px); border-color: var(--line-strong); box-shadow: var(--shadow-hover); }
+.bkl-page .treatment-checkbox:checked + .treatment-card { border-color: var(--maroon); box-shadow: 0 0 0 2px var(--maroon), var(--shadow-hover); }
+.bkl-page .treatment-checkbox:focus-visible + .treatment-card { outline: 2px solid var(--maroon-2); outline-offset: 3px; }
+
+.bkl-page .treatment-image-wrap { position: relative; }
+.bkl-page .treatment-image { height: 128px; overflow: hidden; background: var(--tint); }
+.bkl-page .treatment-image img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s var(--ease); }
+.bkl-page .treatment-card:hover .treatment-image img { transform: scale(1.08); }
+.bkl-page .treatment-image-placeholder { display: grid; width: 100%; height: 100%; place-items: center; background: var(--grad); color: rgba(255, 255, 255, .75); font-size: 34px; }
+
+.bkl-page .treatment-check {
+    position: absolute; top: 10px; right: 10px; display: grid; width: 30px; height: 30px; place-items: center; border-radius: 50%;
+    background: var(--grad); color: #fff; font-size: 12px; box-shadow: 0 8px 16px -6px rgba(100, 23, 45, .8); transform: scale(0); transition: transform .5s var(--ease);
+}
+.bkl-page .treatment-checkbox:checked + .treatment-card .treatment-check { transform: scale(1); }
+.bkl-page .treatment-price {
+    position: absolute; left: 10px; bottom: 10px; padding: 4px 11px; border-radius: 999px; background: rgba(255, 255, 255, .94); color: var(--maroon);
+    font-family: var(--num); font-size: 12.5px; font-weight: 700; box-shadow: 0 6px 14px -8px rgba(58, 10, 24, .5);
+}
+
+.bkl-page .treatment-content { display: flex; flex: 1; flex-direction: column; gap: 8px; padding: 14px; }
+.bkl-page .treatment-category-badge { align-self: flex-start; padding: 3px 10px; border: 1px solid #F0DDB0; border-radius: 999px; background: #FBF1DC; color: #94620F; font-size: 10.5px; font-weight: 700; }
+.bkl-page .treatment-name { margin: 0; color: var(--deep); font-family: var(--display); font-size: 15.5px; font-weight: 600; line-height: 1.35; }
+.bkl-page .treatment-meta { color: var(--muted); font-size: 12px; font-weight: 600; }
+.bkl-page .quantity-wrapper { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: auto; padding-top: 12px; border-top: 1px dashed var(--line-strong); }
+.bkl-page .quantity-label { color: var(--muted); font-size: 11.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+.bkl-page .quantity-control { display: inline-flex; align-items: center; gap: 4px; padding: 3px; border: 1px solid var(--line-strong); border-radius: 999px; background: var(--cream); }
+.bkl-page .btn-qty { display: grid; width: 26px; height: 26px; place-items: center; padding: 0; border: 0; border-radius: 50%; background: #fff; color: var(--maroon); font-size: 10px; cursor: pointer; transition: background .25s ease, color .25s ease, transform .3s var(--ease); }
+.bkl-page .btn-qty:hover { background: var(--maroon); color: #fff; transform: scale(1.12); }
+.bkl-page .quantity-value { min-width: 22px; color: var(--deep); font-family: var(--num); font-size: 13.5px; font-weight: 700; text-align: center; }
+
+/* ---------- rekomendasi jadwal ---------- */
+.bkl-page .schedule-recommendation-box { padding: 18px 20px; border: 1px solid var(--line-strong); border-radius: 20px; background: linear-gradient(135deg, #FBF1F2, #FCF8F6); }
+.bkl-page .schedule-recommendation-header { margin-bottom: 12px; color: var(--deep); }
+.bkl-page .schedule-recommendation-header i { color: var(--maroon-2); }
+.bkl-page .schedule-recommendation-header small { color: var(--muted); }
+.bkl-page .schedule-recommendation-content { display: grid; gap: 10px; }
+.bkl-page .schedule-loading { color: var(--muted); font-size: 13px; }
+.bkl-page .schedule-check-alert { margin: 0; padding: 13px 16px; border: 1px solid transparent; border-radius: 16px; font-size: 13px; line-height: 1.6; }
+.bkl-page .schedule-check-alert.alert-success { border-color: #C6E3D3; background: #E6F4EC; color: #1F7A55; }
+.bkl-page .schedule-check-alert.alert-warning { border-color: #F0DDB0; background: #FBF1DC; color: #7A5210; }
+.bkl-page .schedule-check-alert.alert-danger { border-color: #F0C8CD; background: #FBE9EB; color: #8E2430; }
+.bkl-page .schedule-recommendation-list { display: grid; gap: 8px; }
+.bkl-page .schedule-recommendation-item {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; border: 1px solid var(--line); border-radius: 16px; background: #fff; cursor: pointer;
+    transition: transform .35s var(--ease), border-color .3s ease, box-shadow .35s var(--ease);
+}
+.bkl-page .schedule-recommendation-item:hover { transform: translateX(4px); border-color: var(--maroon-2); box-shadow: var(--shadow); }
+.bkl-page .schedule-recommendation-time { color: var(--deep); font-family: var(--num); font-size: 14px; font-weight: 700; }
+.bkl-page .schedule-recommendation-meta { color: var(--muted); font-size: 12px; }
+.bkl-page .schedule-recommendation-use { color: var(--maroon); font-size: 12.5px; font-weight: 700; white-space: nowrap; }
+
+/* ---------- ringkasan ---------- */
+.bkl-page .reservation-detail-card-elite { overflow: hidden; border: 1px solid var(--line); border-radius: 28px; background: #fff; box-shadow: var(--shadow-hover); }
+.bkl-page .detail-header-elite { position: relative; overflow: hidden; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 26px 26px 24px; background: var(--grad); color: #fff; }
+.bkl-page .header-ornament-1, .bkl-page .header-ornament-2 { position: absolute; border-radius: 50%; pointer-events: none; }
+.bkl-page .header-ornament-1 { top: -60px; right: -30px; width: 180px; height: 180px; background: rgba(233, 201, 209, .16); }
+.bkl-page .header-ornament-2 { bottom: -70px; left: -40px; width: 160px; height: 160px; border: 1px dashed rgba(233, 201, 209, .3); animation: bkl-spin 40s linear infinite; }
+.bkl-page .detail-store-elite { margin-bottom: 6px; color: #E9C9D1; font-size: 11px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; }
+.bkl-page .detail-header-elite h5 { margin: 0; font-family: var(--display); font-size: 24px; font-weight: 600; color: #fff; }
+.bkl-page .detail-header-icon-elite { color: rgba(255, 255, 255, .4); font-size: 34px; }
+
+.bkl-page .selected-treatment-section-elite { padding: 20px 24px; }
+.bkl-page .section-title-row-elite { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; color: var(--muted); font-size: 11.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+.bkl-page .empty-treatment-elite { padding: 18px 0 8px; text-align: center; }
+.bkl-page .empty-icon-elite { display: grid; width: 52px; height: 52px; place-items: center; margin: 0 auto 10px; border: 1px solid var(--line-strong); border-radius: 50%; background: var(--tint); color: var(--maroon); font-size: 18px; }
+.bkl-page .empty-treatment-elite h6 { margin: 0 0 4px; color: var(--deep); font-size: 14px; font-weight: 700; }
+.bkl-page .empty-treatment-elite p { margin: 0; color: var(--muted); font-size: 12.5px; }
+
+.bkl-page #selectedTreatment { display: grid; gap: 10px; max-height: 280px; overflow-y: auto; }
+.bkl-page .selected-item { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 16px; background: var(--cream); animation: bkl-drop .5s var(--ease) both; }
+.bkl-page .selected-item-image { flex-shrink: 0; width: 40px; height: 40px; border-radius: 50%; background: var(--grad); color: #fff; font-size: 14px; }
+.bkl-page .selected-item-name { color: var(--deep); font-size: 13px; font-weight: 700; line-height: 1.4; }
+.bkl-page .selected-item-qty { margin-left: 4px; color: var(--maroon-2); font-weight: 700; }
+.bkl-page .selected-item-meta { color: var(--muted); font-size: 11.5px; }
+.bkl-page .selected-item-price { margin-top: 2px; color: var(--maroon); font-family: var(--num); font-size: 13.5px; font-weight: 700; }
+
+.bkl-page .detail-section-elite { padding: 18px 24px; border-top: 1px solid var(--line); }
+.bkl-page .detail-section-title-elite { margin-bottom: 12px; color: var(--muted); font-size: 11.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+.bkl-page .detail-section-title-elite i { color: var(--maroon-2); }
+.bkl-page .detail-row-elite { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 6px 0; color: var(--muted); font-size: 13px; }
+.bkl-page .detail-row-elite strong { color: var(--deep); font-weight: 700; text-align: right; }
+.bkl-page .duration-box-elite { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 16px; background: var(--tint-2); }
+.bkl-page .duration-icon-elite { display: grid; width: 40px; height: 40px; place-items: center; border-radius: 50%; background: #fff; border: 1px solid var(--line-strong); color: var(--maroon); }
+.bkl-page .duration-box-elite small { display: block; color: var(--muted); font-size: 11.5px; }
+.bkl-page .duration-box-elite strong { color: var(--deep); font-family: var(--num); font-size: 17px; }
+
+.bkl-page .detail-total-elite { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 20px 24px; border-top: 1px dashed var(--line-strong); background: var(--tint); color: var(--deep); font-weight: 700; }
+.bkl-page .detail-total-elite strong { color: var(--maroon); font-family: var(--num); font-size: 26px; letter-spacing: -.03em; }
+.bkl-page .detail-info-elite { display: flex; align-items: flex-start; gap: 10px; padding: 14px 24px 0; color: var(--muted); font-size: 12.5px; line-height: 1.6; }
+.bkl-page .detail-info-elite i { margin-top: 3px; color: var(--maroon-2); }
+.bkl-page .detail-footer-elite { padding: 20px 24px 24px; }
+
+.bkl-page .btn-gradient-elite, .bkl-page .btn-outline-elite {
+    position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; width: 100%; height: 52px; padding: 0 24px; border-radius: 999px;
+    font: inherit; font-size: 14px; font-weight: 700; text-decoration: none; cursor: pointer;
+    transition: transform .4s var(--ease), box-shadow .4s var(--ease), background .3s ease, color .3s ease, border-color .3s ease;
+}
+.bkl-page .btn-gradient-elite { border: 0; background: var(--grad); color: #fff; box-shadow: 0 16px 30px -14px rgba(100, 23, 45, .8); }
+.bkl-page .btn-gradient-elite:hover { color: #fff; transform: translateY(-3px); box-shadow: 0 22px 36px -14px rgba(100, 23, 45, .85); }
+.bkl-page .btn-gradient-elite::after { content: ""; position: absolute; top: 0; left: -80%; width: 50%; height: 100%; background: linear-gradient(100deg, transparent, rgba(233, 201, 209, .5), transparent); transform: skewX(-20deg); transition: left 1s var(--ease); }
+.bkl-page .btn-gradient-elite:hover::after { left: 140%; }
+.bkl-page .btn-outline-elite { border: 1px solid var(--line-strong); background: #fff; color: var(--maroon); }
+.bkl-page .btn-outline-elite:hover { background: var(--maroon); border-color: var(--maroon); color: #fff; transform: translateY(-3px); }
+
+/* ---------- responsif ---------- */
+@media (max-width: 991px) {
+    .bkl-page .reservation-detail-card-elite.sticky-top { position: static; margin-bottom: 20px; }
+}
+@media (max-width: 640px) {
+    .bkl-page .card-header-elite { padding: 18px; }
+    .bkl-page .card-body.p-4 { padding: 18px !important; }
+    .bkl-page .treatment-slider-prev { left: -6px; }
+    .bkl-page .treatment-slider-next { right: -6px; }
+    .bkl-page .treatment-filter-select { width: 100%; min-width: 0; }
+}

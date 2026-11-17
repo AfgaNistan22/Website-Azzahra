@@ -1,0 +1,16 @@
+/* Warna menu navbar Azzahra */
+.navigation ul li a {
+    color: #ffffff !important;
+    text-decoration: none;
+}
+
+/* Warna menu saat diarahkan mouse */
+.navigation ul li a:hover {
+    color: #ffffff !important;
+}
+
+/* Warna menu aktif, termasuk Jadwal Terapis */
+.navigation ul li a.active {
+    color: #ffffff !important;
+    background: transparent !important;
+}

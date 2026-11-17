@@ -1,0 +1,48 @@
+/* =========================================================
+   PROMO, pelengkap tema maroon
+   Dimuat SETELAH booking-list-modern.css. Prefix: pr-
+========================================================= */
+
+.bkl-page .bkl-content { padding-top: 64px; }
+
+.pr-head { max-width: 680px; margin-bottom: 30px; }
+.pr-title { margin: 8px 0 10px; color: var(--deep); font-family: var(--display); font-size: clamp(26px, 3.4vw, 38px); font-weight: 600; letter-spacing: -.01em; line-height: 1.2; }
+.pr-sub { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.8; }
+
+.pr-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; margin-bottom: 20px; }
+.pr-card { display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--line); border-radius: 28px; background: #fff; box-shadow: var(--shadow); transition: transform .5s var(--ease), box-shadow .5s var(--ease), border-color .3s ease; }
+.pr-card:hover { transform: translateY(-7px); border-color: var(--line-strong); box-shadow: var(--shadow-hover); }
+
+.pr-img { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: var(--tint); }
+.pr-img img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 1s var(--ease); }
+.pr-card:hover .pr-img img { transform: scale(1.08); }
+.pr-img::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 60%, rgba(42, 7, 17, .35)); pointer-events: none; }
+.pr-ph { display: grid; width: 100%; height: 100%; place-items: center; background: var(--grad); color: rgba(255, 255, 255, .85); font-size: 54px; }
+
+.pr-badge { position: absolute; z-index: 2; left: 14px; top: 14px; padding: 7px 16px; border-radius: 999px; background: var(--grad); color: #fff; font-family: var(--num); font-size: 12.5px; font-weight: 700; letter-spacing: .06em; box-shadow: 0 12px 22px -10px rgba(100, 23, 45, .9); }
+.pr-soon { position: absolute; z-index: 2; right: 14px; top: 14px; display: inline-flex; align-items: center; gap: 6px; padding: 6px 13px; border: 1px solid #F0DDB0; border-radius: 999px; background: #FBF1DC; color: #94620F; font-size: 11px; font-weight: 700; }
+.pr-soon i { animation: pr-flick 1.4s ease-in-out infinite; }
+@keyframes pr-flick { 50% { transform: scale(1.25); opacity: .7; } }
+
+.pr-body { display: flex; flex: 1; flex-direction: column; padding: 24px 24px 22px; }
+.pr-body h3 { margin: 0 0 10px; color: var(--deep); font-family: var(--display); font-size: 22px; font-weight: 600; line-height: 1.3; }
+.pr-desc { margin: 0 0 18px; color: var(--muted); font-size: 14px; line-height: 1.8; }
+.pr-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: auto; padding-top: 16px; border-top: 1px dashed var(--line-strong); }
+.pr-date { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); font-size: 12.5px; font-weight: 600; }
+.pr-date i { color: var(--maroon-2); }
+.pr-btn { height: 40px; padding: 0 20px; font-size: 12.5px; }
+
+.pr-empty { padding: 64px 24px 70px; border: 1px solid var(--line); border-radius: 30px; background: #fff; box-shadow: var(--shadow); text-align: center; }
+.pr-empty > i { display: grid; width: 92px; height: 92px; place-items: center; margin: 0 auto 22px; border-radius: 50%; background: var(--grad); color: #fff; font-size: 32px; box-shadow: 0 20px 36px -16px rgba(100, 23, 45, .7); }
+.pr-empty h3 { margin: 0 0 8px; color: var(--deep); font-family: var(--display); font-size: 26px; font-weight: 600; }
+.pr-empty p { max-width: 420px; margin: 0 auto 24px; color: var(--muted); font-size: 14.5px; line-height: 1.8; }
+
+@media (max-width: 1020px) { .pr-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) {
+    .pr-grid { grid-template-columns: 1fr; gap: 16px; }
+    .pr-card { border-radius: 24px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .pr-card, .pr-img img { transition: none; }
+    .pr-soon i { animation: none; }
+}

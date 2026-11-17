@@ -1,0 +1,196 @@
+/* =========================================================
+   AZZAHRA - ANIMASI HALAMAN LAYANAN
+   Letakkan di: public/template/css/layanan-animasi.css
+   Dimuat SETELAH layanan.css
+   ========================================================= */
+
+/* ---------- Keyframes ---------- */
+
+@keyframes layanan-rise {
+    from { opacity: 0; transform: translateY(26px); }
+    to   { opacity: 1; transform: none; }
+}
+
+@keyframes layanan-pop {
+    from { opacity: 0; transform: translateY(14px) scale(.92); }
+    to   { opacity: 1; transform: none; }
+}
+
+@keyframes layanan-drift-a {
+    from { transform: translate(0, 0) rotate(0deg) scale(1); }
+    to   { transform: translate(46px, 34px) rotate(24deg) scale(1.1); }
+}
+
+@keyframes layanan-drift-b {
+    from { transform: translate(0, 0) rotate(0deg) scale(1); }
+    to   { transform: translate(-52px, -30px) rotate(-20deg) scale(1.08); }
+}
+
+@keyframes layanan-pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(244, 232, 236, .55); }
+    70%  { box-shadow: 0 0 0 9px rgba(244, 232, 236, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(244, 232, 236, 0); }
+}
+
+@keyframes layanan-float {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-9px); }
+}
+
+@keyframes layanan-wiggle {
+    0%, 100% { transform: rotate(0); }
+    25%      { transform: rotate(-14deg); }
+    60%      { transform: rotate(10deg); }
+}
+
+/* ---------- 1. HERO: satu rangkaian masuk saat halaman dibuka ---------- */
+
+.layanan-page .layanan-eyebrow {
+    animation: layanan-rise .8s cubic-bezier(.2, .7, .2, 1) .10s backwards;
+}
+
+.layanan-page .layanan-hero h1 {
+    animation: layanan-rise .9s cubic-bezier(.2, .7, .2, 1) .28s backwards;
+}
+
+.layanan-page .layanan-hero p {
+    animation: layanan-rise .9s cubic-bezier(.2, .7, .2, 1) .48s backwards;
+}
+
+/* Titik kecil di label berdenyut pelan */
+.layanan-page .layanan-eyebrow::before {
+    animation: layanan-pulse 2.6s ease-out infinite;
+}
+
+/* Lingkaran dekoratif hanyut perlahan */
+.layanan-page .layanan-hero::before {
+    animation: layanan-drift-a 16s ease-in-out infinite alternate;
+}
+
+.layanan-page .layanan-hero::after {
+    animation: layanan-drift-b 20s ease-in-out infinite alternate;
+}
+
+/* ---------- 2. REVEAL SAAT SCROLL (aktif hanya jika JS jalan) ---------- */
+
+.layanan-page.is-js [data-reveal]:not(.is-visible) {
+    opacity: 0;
+}
+
+.layanan-page.is-js [data-reveal].is-visible {
+    animation: layanan-rise .75s cubic-bezier(.2, .7, .2, 1) backwards;
+    animation-delay: calc(var(--d, 0) * 100ms);
+}
+
+/* Chip kategori muncul berurutan satu per satu */
+.layanan-page.is-js [data-reveal-group]:not(.is-visible) .layanan-category {
+    opacity: 0;
+}
+
+.layanan-page.is-js [data-reveal-group].is-visible .layanan-category {
+    animation: layanan-pop .55s cubic-bezier(.2, .7, .2, 1) backwards;
+    animation-delay: calc(var(--i, 0) * 70ms + 120ms);
+}
+
+/* ---------- 3. FOTO: memudar masuk saat selesai dimuat ---------- */
+
+.layanan-page.is-js .layanan-image {
+    transition: transform .6s ease, opacity .7s ease;
+}
+
+.layanan-page.is-js .layanan-image:not(.is-loaded) {
+    opacity: 0;
+    transform: scale(1.1);
+}
+
+/* ---------- 4. INTERAKSI KARTU ---------- */
+
+.layanan-page .layanan-card-category i {
+    display: inline-block;
+    transition: transform .35s ease;
+}
+
+.layanan-page .layanan-card:hover .layanan-card-category i {
+    transform: rotate(24deg) scale(1.15);
+}
+
+.layanan-page .layanan-price {
+    transition: transform .3s ease;
+    transform-origin: right center;
+}
+
+.layanan-page .layanan-card:hover .layanan-price {
+    transform: scale(1.06);
+}
+
+/* Tombol: kilau melintas saat hover */
+.layanan-page .layanan-book {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.layanan-page .layanan-book::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    bottom: 0;
+    left: -60%;
+    width: 45%;
+    background: linear-gradient(
+        105deg,
+        transparent,
+        rgba(255, 255, 255, .28),
+        transparent
+    );
+    transform: skewX(-20deg);
+    transition: left .7s ease;
+    pointer-events: none;
+}
+
+.layanan-page .layanan-book:hover::after {
+    left: 130%;
+}
+
+.layanan-page .layanan-book:hover i {
+    animation: layanan-wiggle .6s ease;
+}
+
+.layanan-page .layanan-book:active {
+    transform: translateY(0) scale(.985);
+}
+
+/* ---------- 5. KONDISI KOSONG ---------- */
+
+.layanan-page .layanan-empty > i {
+    animation: layanan-float 3.6s ease-in-out infinite;
+}
+
+/* ---------- 6. HORMATI PENGATURAN PENGURANGAN GERAK ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+    .layanan-page .layanan-eyebrow,
+    .layanan-page .layanan-eyebrow::before,
+    .layanan-page .layanan-hero h1,
+    .layanan-page .layanan-hero p,
+    .layanan-page .layanan-hero::before,
+    .layanan-page .layanan-hero::after,
+    .layanan-page .layanan-empty > i,
+    .layanan-page [data-reveal].is-visible,
+    .layanan-page [data-reveal-group].is-visible .layanan-category,
+    .layanan-page .layanan-book:hover i {
+        animation: none !important;
+    }
+
+    .layanan-page.is-js [data-reveal]:not(.is-visible),
+    .layanan-page.is-js [data-reveal-group]:not(.is-visible) .layanan-category,
+    .layanan-page.is-js .layanan-image:not(.is-loaded) {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    .layanan-page .layanan-book::after {
+        display: none;
+    }
+}

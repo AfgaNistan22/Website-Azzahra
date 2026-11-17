@@ -1,0 +1,253 @@
+/* =========================================================
+   KONFIRMASI PEMBAYARAN, pelengkap tema maroon
+   Dimuat SETELAH booking-list-modern.css (hero, alert, tombol).
+   Class pay-* dipertahankan agar JavaScript halaman tidak berubah.
+========================================================= */
+
+.bkl-page .bkl-content { padding-bottom: 20px; }
+.bkl-page .bkl-btn-line { border: 1px solid var(--line-strong); background: #fff; color: var(--maroon); }
+.bkl-page .bkl-btn-line:hover { background: var(--maroon); border-color: var(--maroon); color: #fff; transform: translateY(-3px); }
+.bkl-alert-list { display: block; }
+.bkl-alert-list ul { margin: 6px 0 0; padding-left: 18px; }
+.bkl-hero-copy p strong { color: #fff; font-weight: 700; }
+
+/* ---------- kartu ---------- */
+.pay-card { position: relative; overflow: hidden; border: 1px solid var(--line); border-radius: 28px; background: #fff; box-shadow: var(--shadow); }
+
+.pay-steps { display: flex; align-items: center; gap: 0; margin: 0 0 24px; padding: 18px 22px; list-style: none;
+    border: 1px solid var(--line); border-radius: 24px; background: #fff; box-shadow: var(--shadow); }
+.pay-step { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; color: var(--muted); font-size: 13px; font-weight: 600; }
+.pay-step:not(:last-child)::after { content: ""; flex: 1; height: 2px; margin: 0 14px; border-radius: 2px; background: var(--line); transition: background .3s ease; }
+.pay-step-no { display: grid; flex-shrink: 0; width: 32px; height: 32px; place-items: center; border-radius: 50%;
+    background: var(--tint); color: var(--maroon); font-size: 13px; font-weight: 700; transition: all .3s ease; }
+.pay-step-label { white-space: nowrap; }
+.pay-step.is-done { color: var(--deep); }
+.pay-step.is-done .pay-step-no { background: var(--maroon); color: #fff; }
+.pay-step.is-done:not(:last-child)::after { background: var(--maroon); }
+
+.pay-grid { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr); gap: 24px; align-items: start; }
+
+/* ---- Bagian kartu ---- */
+.pay-block { padding: 26px 28px; }
+.pay-block + .pay-block { border-top: 1px solid var(--line); }
+.pay-head { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+.pay-head-ico { display: grid; flex-shrink: 0; width: 40px; height: 40px; place-items: center; border-radius: 12px;
+    background: var(--tint); color: var(--maroon); font-size: 15px; }
+.pay-head h2 { margin: 0; color: var(--deep); font-size: 16px; font-weight: 700; }
+.pay-head p { margin: 2px 0 0; color: var(--muted); font-size: 12.5px; }
+.pay-opt { margin-left: auto; padding: 3px 10px; border-radius: 50px; background: var(--tint); color: var(--muted); font-size: 11px; font-weight: 600; }
+
+/* ---- Pilihan (metode & promo) ---- */
+.pay-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.pay-options.is-single { grid-template-columns: 1fr; }
+.pay-method { position: relative; display: block; margin: 0; }
+.pay-method input { position: absolute; opacity: 0; pointer-events: none; }
+.pay-method-card { position: relative; display: flex; align-items: center; gap: 14px; height: 100%; padding: 16px;
+    border: 1.5px solid var(--line); border-radius: 14px; background: #fff; cursor: pointer;
+    transition: border-color .2s ease, box-shadow .2s ease, background .2s ease, transform .2s ease; }
+.pay-method-card:hover { border-color: var(--maroon-2); transform: translateY(-1px); }
+.pay-method input:focus-visible + .pay-method-card { outline: 3px solid rgba(135,53,77,.35); outline-offset: 2px; }
+.pay-method input:checked + .pay-method-card { border-color: var(--maroon); background: #FCF7F8; box-shadow: 0 0 0 3px rgba(100,23,45,.10); }
+.pay-method-icon { display: grid; flex-shrink: 0; width: 46px; height: 46px; place-items: center; overflow: hidden;
+    border-radius: 12px; background: var(--tint); color: var(--maroon); font-size: 17px; transition: all .2s ease; }
+.pay-method-icon img { max-width: 80%; max-height: 80%; object-fit: contain; }
+.pay-method input:checked + .pay-method-card .pay-method-icon { background: var(--maroon); color: #fff; }
+.pay-method-body { min-width: 0; flex: 1; }
+.pay-method-name { color: var(--deep); font-size: 14px; font-weight: 700; line-height: 1.35; }
+.pay-method-meta { margin-top: 3px; color: var(--muted); font-size: 12px; line-height: 1.5; overflow-wrap: anywhere; }
+.pay-method-tick { display: grid; flex-shrink: 0; width: 22px; height: 22px; place-items: center; border: 2px solid var(--line);
+    border-radius: 50%; color: transparent; font-size: 10px; transition: all .2s ease; }
+.pay-method input:checked + .pay-method-card .pay-method-tick { border-color: var(--maroon); background: var(--maroon); color: #fff; }
+.pay-save { flex-shrink: 0; padding: 4px 10px; border-radius: 50px; background: #EAF3EC; color: #1F7A55; font-size: 12px; font-weight: 700; white-space: nowrap; }
+
+.pay-info { display: flex; gap: 10px; padding: 13px 16px; border: 1px solid #E8DFCE; border-radius: 12px; background: #FAF8F3; color: #75664D; font-size: 12.5px; line-height: 1.7; }
+.pay-info i { margin-top: 3px; color: #94620F; }
+.pay-error { display: none; margin: 12px 0 0; color: #B3303C; font-size: 12.5px; font-weight: 500; }
+.pay-error.is-show { display: block; }
+
+/* ---- Detail transfer ---- */
+.pay-transfer { margin-top: 18px; padding: 20px; border-radius: 14px; color: #fff;
+    background: linear-gradient(135deg, #350914 0%, #64172D 60%, #87354D 100%); animation: pay-in .35s var(--ease); }
+.pay-transfer[hidden] { display: none; }
+.pay-transfer-top { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; color: #E9C9D1; font-size: 12px; font-weight: 600; letter-spacing: .4px; text-transform: uppercase; }
+.pay-transfer-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 10px 0; border-top: 1px solid rgba(255,255,255,.14); }
+.pay-transfer-row small { display: block; color: rgba(255,255,255,.7); font-size: 11.5px; }
+.pay-transfer-row strong { display: block; margin-top: 2px; font-size: 16px; font-weight: 700; letter-spacing: .3px; overflow-wrap: anywhere; }
+.pay-transfer-row .is-big { font-size: 20px; color: #E9C9D1; }
+.pay-copy { flex-shrink: 0; display: inline-flex; align-items: center; gap: 7px; min-height: 34px; padding: 0 14px; border: 1px solid rgba(255,255,255,.35);
+    border-radius: 9px; background: rgba(255,255,255,.1); color: #fff; font-family: inherit; font-size: 12px; font-weight: 600; cursor: pointer; transition: background .2s ease; }
+.pay-copy:hover { background: rgba(255,255,255,.2); }
+.pay-copy.is-ok { background: #fff; color: var(--maroon); }
+@keyframes pay-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+.pay-transfer [hidden] { display: none !important; }
+.pay-qr { display: flex; align-items: center; gap: 18px; padding: 4px 0 14px; }
+.pay-qr-box { flex-shrink: 0; width: 168px; height: 168px; padding: 10px; border-radius: 14px; background: #fff; box-shadow: 0 8px 22px rgba(0,0,0,.25); }
+.pay-qr-box img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.pay-qr-box { position: relative; }
+.pay-qr-gagal { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 12px;
+    color: var(--muted); font-size: 12px; line-height: 1.6; text-align: center; }
+.pay-qr-gagal i { margin-bottom: 8px; color: #CDBFC3; font-size: 26px; }
+.pay-qr-gagal[hidden] { display: none; }
+.pay-qr-info { min-width: 0; }
+.pay-qr-info strong { display: block; font-size: 15px; }
+.pay-qr-info p { margin: 6px 0 12px; color: rgba(255,255,255,.8); font-size: 12.5px; line-height: 1.7; }
+.pay-qr-info a.pay-copy { text-decoration: none; }
+@media (max-width: 640px) { .pay-qr { flex-direction: column; text-align: center; } .pay-qr-box { width: 200px; height: 200px; } }
+
+/* ---- Unggah bukti ---- */
+.pay-drop { display: block; margin: 0; padding: 30px 22px; border: 2px dashed #DCC8CE; border-radius: 14px; background: #FCFAFA;
+    text-align: center; cursor: pointer; transition: border-color .2s ease, background .2s ease, transform .2s ease; }
+.pay-drop:hover, .pay-drop.is-over { border-color: var(--maroon); background: #FCF7F8; }
+.pay-drop.is-over { transform: scale(1.01); }
+.pay-drop input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.pay-drop-ico { display: grid; width: 56px; height: 56px; place-items: center; margin: 0 auto 12px; border-radius: 16px; background: var(--tint); color: var(--maroon); font-size: 22px; }
+.pay-drop-title { color: var(--deep); font-size: 14px; font-weight: 700; }
+.pay-drop-title span { color: var(--maroon); text-decoration: underline; text-underline-offset: 3px; }
+.pay-drop-hint { margin-top: 4px; color: var(--muted); font-size: 12px; }
+.pay-drop[hidden] { display: none; }
+
+.pay-file { display: none; align-items: center; gap: 14px; padding: 14px; border: 1px solid var(--line); border-radius: 14px; background: #fff; }
+.pay-file.is-show { display: flex; animation: pay-in .3s var(--ease); }
+.pay-file-thumb { display: grid; flex-shrink: 0; width: 72px; height: 72px; place-items: center; overflow: hidden; border-radius: 12px; background: var(--tint); color: var(--maroon); font-size: 26px; }
+.pay-file-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.pay-file-info { min-width: 0; flex: 1; }
+.pay-file-name { color: var(--deep); font-size: 13.5px; font-weight: 700; overflow-wrap: anywhere; }
+.pay-file-size { margin-top: 3px; color: var(--muted); font-size: 12px; }
+.pay-file-ok { display: inline-flex; align-items: center; gap: 6px; margin-top: 6px; color: #1F7A55; font-size: 12px; font-weight: 600; }
+.pay-file-del { display: grid; flex-shrink: 0; width: 36px; height: 36px; place-items: center; border: 1px solid #F0D5D8; border-radius: 10px; background: #fff; color: #B3303C; cursor: pointer; transition: background .2s ease; }
+.pay-file-del:hover { background: #FBEAEA; }
+
+.pay-note { width: 100%; padding: 13px 15px; border: 1.5px solid var(--line); border-radius: 12px; background: #fff; color: var(--text);
+    font-family: inherit; font-size: 13.5px; line-height: 1.7; resize: vertical; transition: border-color .2s ease, box-shadow .2s ease; }
+.pay-note:focus { border-color: var(--maroon); outline: none; box-shadow: 0 0 0 3px rgba(100,23,45,.12); }
+.pay-count { margin: 6px 0 0; color: var(--muted); font-size: 12px; text-align: right; }
+
+/* ---- Ringkasan ---- */
+.pay-aside { position: sticky; top: 20px; }
+.pay-aside-head { padding: 22px 24px; color: #fff;
+    background: radial-gradient(circle at 12% 0%, rgba(201,162,75,.2), transparent 45%), linear-gradient(135deg, #350914 0%, #64172D 100%); }
+.pay-aside-head small { display: block; color: #E9C9D1; font-size: 11.5px; font-weight: 600; letter-spacing: .5px; text-transform: uppercase; }
+.pay-aside-head h2 { margin: 6px 0 0; color: #fff; font-size: 19px; font-weight: 700; letter-spacing: .3px; }
+.pay-aside-block { padding: 20px 24px; }
+.pay-aside-block + .pay-aside-block { border-top: 1px solid var(--line); }
+.pay-aside-title { margin: 0 0 12px; color: var(--deep); font-size: 13px; font-weight: 700; }
+.pay-sum-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; padding: 6px 0; font-size: 13px; }
+.pay-sum-row span { color: var(--muted); }
+.pay-sum-row strong { color: var(--text); text-align: right; font-weight: 600; }
+.pay-item { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px dashed var(--line); font-size: 13px; }
+.pay-item:first-of-type { padding-top: 0; }
+.pay-item:last-child { padding-bottom: 0; border-bottom: 0; }
+.pay-item-name { color: var(--deep); font-weight: 700; }
+.pay-item-meta { margin-top: 2px; color: var(--muted); font-size: 11.5px; }
+.pay-item-promo { display: none; margin-top: 4px; color: var(--maroon); font-size: 11.5px; font-weight: 700; }
+.pay-item-asli { display: none; color: var(--muted); font-size: 11.5px; text-decoration: line-through; }
+.pay-item-total { color: var(--maroon); font-weight: 700; white-space: nowrap; }
+.pay-total { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 18px 24px; border-top: 1px solid var(--line); background: #FCFAFA; }
+.pay-total span { color: var(--muted); font-size: 13px; }
+.pay-total strong { color: var(--maroon); font-size: 23px; font-weight: 800; letter-spacing: -.5px; }
+.pay-actions { display: flex; flex-direction: column; gap: 10px; padding: 18px 24px 22px; }
+.pay-checklist { margin: 0 0 4px; padding: 0; list-style: none; }
+.pay-checklist li { display: flex; align-items: center; gap: 10px; padding: 4px 0; color: var(--muted); font-size: 12.5px; }
+.pay-checklist i { display: grid; width: 18px; height: 18px; place-items: center; border: 1px solid var(--line); border-radius: 50%; color: transparent; font-size: 8px; transition: all .25s ease; }
+.pay-checklist li.is-done { color: var(--text); }
+.pay-checklist li.is-done i { border-color: #1F7A55; background: #1F7A55; color: #fff; }
+.pay-secure { display: flex; align-items: center; justify-content: center; gap: 8px; color: var(--muted); font-size: 11.5px; }
+
+/* ---- Bilah bawah (ponsel) ---- */
+.pay-mobilebar { display: none; }
+
+@media (max-width: 991px) {
+    .pay-grid { grid-template-columns: 1fr; }
+    .pay-aside { position: static; }
+    .pay-actions .pay-submit-desktop { display: none; }
+    .bkl-page { padding-bottom: 110px; }
+    .pay-mobilebar { position: fixed; right: 0; bottom: 0; left: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; gap: 14px;
+        padding: 12px 18px calc(12px + env(safe-area-inset-bottom)); border-top: 1px solid var(--line); background: rgba(255,255,255,.95);
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px); box-shadow: 0 -8px 24px rgba(69,13,29,.08); }
+    .pay-mobilebar small { display: block; color: var(--muted); font-size: 11px; }
+    .pay-mobilebar strong { color: var(--maroon); font-size: 18px; font-weight: 800; }
+}
+@media (max-width: 640px) {
+    .pay-steps { padding: 14px 16px; }
+    .pay-step-label { display: none; }
+    .pay-step.is-done .pay-step-label, .pay-step.is-current .pay-step-label { display: inline; }
+    .pay-step:not(:last-child)::after { margin: 0 8px; }
+    .pay-options { grid-template-columns: 1fr; }
+    .pay-block { padding: 22px 18px; }
+    .pay-aside-block, .pay-total, .pay-actions { padding-left: 18px; padding-right: 18px; }
+    .pay-transfer { padding: 16px; }
+    .pay-transfer-row strong { font-size: 15px; }
+}
+@media (prefers-reduced-motion: reduce) { .pay-transfer, .pay-file.is-show { animation: none; } }
+
+/* =========================================================
+   PENYELARASAN DENGAN TEMA MAROON (menimpa gaya di atas)
+========================================================= */
+.pay-steps { gap: 0; margin-bottom: 26px; padding: 20px 26px; border-radius: 26px; }
+.pay-step { color: var(--muted); }
+.pay-step:not(:last-child)::after { height: 2px; background: var(--line-strong); }
+.pay-step-no { width: 36px; height: 36px; border: 1px solid var(--line-strong); font-family: var(--num); }
+.pay-step.is-current .pay-step-no { border-color: var(--maroon-2); background: #fff; color: var(--maroon); animation: bkl-glow 3.2s ease-in-out infinite; }
+.pay-step.is-current { color: var(--deep); }
+.pay-step.is-done .pay-step-no { border-color: transparent; background: var(--grad); box-shadow: 0 10px 20px -10px rgba(100, 23, 45, .8); }
+.pay-step.is-done:not(:last-child)::after { background: var(--maroon-2); }
+
+.pay-block { padding: 30px 32px; }
+.pay-head-ico { width: 44px; height: 44px; border: 1px solid var(--line-strong); border-radius: 50%; }
+.pay-head h2 { font-family: var(--display); font-size: 20px; font-weight: 600; }
+.pay-opt { border: 1px solid var(--line); background: var(--cream); }
+
+.pay-method-card { border: 1px solid var(--line); border-radius: 20px; transition: border-color .3s ease, box-shadow .4s var(--ease), background .3s ease, transform .4s var(--ease); }
+.pay-method-card:hover { transform: translateY(-3px); border-color: var(--line-strong); box-shadow: var(--shadow); }
+.pay-method input:checked + .pay-method-card { border-color: var(--maroon); background: var(--tint-2); box-shadow: 0 0 0 2px var(--maroon), var(--shadow); }
+.pay-method-icon { border: 1px solid var(--line-strong); border-radius: 50%; }
+.pay-method input:checked + .pay-method-card .pay-method-icon { border-color: transparent; background: var(--grad); }
+.pay-method input:checked + .pay-method-card .pay-method-tick { border-color: transparent; background: var(--grad); }
+.pay-save { border: 1px solid #C6E3D3; background: #E6F4EC; }
+
+.pay-info { border: 1px solid #F0DDB0; border-radius: 18px; background: #FBF1DC; color: #7A5210; }
+.pay-transfer { border-radius: 22px; background: var(--grad); }
+.pay-transfer-row .is-big { font-family: var(--num); }
+.pay-copy { border-radius: 999px; }
+.pay-qr-box { border-radius: 20px; }
+
+.pay-drop { border: 2px dashed var(--line-strong); border-radius: 22px; background: var(--cream); }
+.pay-drop:hover, .pay-drop.is-over { border-color: var(--maroon-2); background: var(--tint-2); }
+.pay-drop-ico { border: 1px solid var(--line-strong); border-radius: 50%; }
+.pay-drop-title span { color: var(--maroon); }
+.pay-file { border-radius: 20px; }
+.pay-file-thumb { border-radius: 16px; }
+.pay-file-del { border-radius: 50%; }
+
+.pay-note { border: 1px solid var(--line-strong); border-radius: 18px; background: var(--cream); }
+.pay-note:focus { border-color: var(--maroon-2); background: #fff; box-shadow: 0 0 0 4px rgba(124, 36, 65, .10); }
+
+.pay-aside-head { position: relative; isolation: isolate; overflow: hidden; padding: 26px 28px; background: var(--deep); }
+.pay-aside-head::before {
+    content: ""; position: absolute; z-index: -1; inset: -40%;
+    background: radial-gradient(40% 44% at 14% 26%, rgba(168, 71, 106, .7), transparent 70%), radial-gradient(34% 38% at 90% 20%, rgba(124, 36, 65, .8), transparent 70%), radial-gradient(46% 50% at 64% 100%, rgba(100, 23, 45, .9), transparent 70%);
+    filter: blur(24px); animation: bkl-drift 16s ease-in-out infinite alternate;
+}
+.pay-aside-head small { letter-spacing: .24em; }
+.pay-aside-head h2 { font-family: var(--display); font-size: 24px; font-weight: 600; letter-spacing: .01em; }
+.pay-aside-block { padding: 20px 28px; }
+.pay-aside-title { color: var(--muted); font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase; }
+.pay-item-name { font-family: var(--display); font-size: 15px; font-weight: 600; }
+.pay-item-total { font-family: var(--num); }
+.pay-total { padding: 20px 28px; border-top: 1px dashed var(--line-strong); background: var(--tint); }
+.pay-total span { color: var(--deep); font-weight: 700; }
+.pay-total strong { font-family: var(--num); font-size: 26px; letter-spacing: -.03em; }
+.pay-actions { padding: 20px 28px 26px; }
+.pay-actions .bkl-btn { width: 100%; }
+.pay-checklist li.is-done i { border-color: transparent; background: var(--grad); }
+.pay-mobilebar .bkl-btn { height: 46px; padding: 0 22px; }
+
+@media (max-width: 991px) {
+    .pay-mobilebar strong { font-family: var(--num); }
+}
+@media (max-width: 640px) {
+    .pay-block { padding: 24px 18px; }
+    .pay-aside-block, .pay-total, .pay-actions, .pay-aside-head { padding-left: 18px; padding-right: 18px; }
+}

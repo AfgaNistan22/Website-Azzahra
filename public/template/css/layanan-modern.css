@@ -1,0 +1,104 @@
+/* =========================================================
+   PERAWATAN & LAYANAN, pelengkap tema maroon
+   Dimuat SETELAH booking-list-modern.css. Prefix: ly-
+========================================================= */
+
+.bkl-page .bkl-content { padding-top: 64px; }
+
+/* ---------- pencarian di hero ---------- */
+.ly-search { position: relative; display: flex; align-items: center; gap: 8px; max-width: 560px; margin-top: 28px; padding: 7px 7px 7px 20px; border: 1px solid rgba(233, 201, 209, .4); border-radius: 999px; background: rgba(255, 255, 255, .12); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+.ly-search > i { color: #E9C9D1; font-size: 14px; }
+.ly-search input[type="text"] { flex: 1; min-width: 0; height: 44px; border: 0; background: transparent; color: #fff; font: inherit; font-size: 14.5px; }
+.ly-search input[type="text"]::placeholder { color: rgba(255, 255, 255, .65); }
+.ly-search input[type="text"]:focus { outline: 0; }
+.ly-search:focus-within { border-color: #fff; background: rgba(255, 255, 255, .2); }
+.ly-search .bkl-btn { flex-shrink: 0; height: 44px; padding: 0 26px; background: #fff; color: var(--maroon); }
+.ly-search .bkl-btn:hover { background: var(--tint); color: var(--maroon); transform: translateY(-2px); }
+
+/* ---------- judul bagian ---------- */
+.ly-section { margin-bottom: 54px; }
+.ly-head { max-width: 680px; margin-bottom: 28px; }
+.ly-title { margin: 8px 0 10px; color: var(--deep); font-family: var(--display); font-size: clamp(26px, 3.4vw, 38px); font-weight: 600; letter-spacing: -.01em; line-height: 1.2; }
+.ly-sub { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.85; }
+
+/* ---------- kategori ---------- */
+.ly-cats { display: flex; flex-wrap: wrap; gap: 8px; }
+.ly-cat {
+    display: inline-flex; align-items: center; gap: 9px; height: 44px; padding: 0 20px; border: 1px solid var(--line-strong); border-radius: 999px; background: #fff; color: var(--maroon);
+    font-size: 13px; font-weight: 600; text-decoration: none; white-space: nowrap; transition: background .3s ease, color .3s ease, transform .4s var(--ease), box-shadow .4s var(--ease);
+}
+.ly-cat i { color: var(--maroon-2); font-size: 12px; transition: color .3s ease; }
+.ly-cat:hover { background: var(--tint-2); color: var(--maroon); text-decoration: none; transform: translateY(-2px); }
+.ly-cat.is-active { border-color: transparent; background: var(--grad); color: #fff; box-shadow: 0 12px 22px -12px rgba(100, 23, 45, .85); }
+.ly-cat.is-active i { color: #fff; }
+
+/* ---------- grid kartu ---------- */
+.ly-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+.ly-card { display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--line); border-radius: 28px; background: #fff; box-shadow: var(--shadow); transition: transform .5s var(--ease), box-shadow .5s var(--ease), border-color .3s ease; }
+.ly-card:hover { transform: translateY(-7px); border-color: var(--line-strong); box-shadow: var(--shadow-hover); }
+
+.ly-img { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: var(--tint); }
+.ly-img img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 1s var(--ease); }
+.ly-card:hover .ly-img img { transform: scale(1.08); }
+.ly-img::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 60%, rgba(42, 7, 17, .35)); pointer-events: none; }
+.ly-chip { position: absolute; z-index: 2; left: 14px; top: 14px; display: inline-flex; align-items: center; gap: 7px; padding: 6px 13px; border: 1px solid rgba(255, 255, 255, .6); border-radius: 999px; background: rgba(255, 255, 255, .9); color: var(--maroon); font-size: 11px; font-weight: 700; letter-spacing: .04em; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+
+.ly-body { display: flex; flex: 1; flex-direction: column; padding: 24px 24px 26px; }
+.ly-body h3 { margin: 0 0 10px; color: var(--deep); font-family: var(--display); font-size: 22px; font-weight: 600; line-height: 1.3; }
+.ly-desc { display: -webkit-box; margin: 0 0 20px; overflow: hidden; color: var(--muted); font-size: 14px; line-height: 1.8; -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
+
+.ly-meta { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; margin-top: auto; padding: 16px 0 20px; border-top: 1px dashed var(--line-strong); }
+.ly-duration { display: inline-flex; align-items: center; gap: 8px; padding: 6px 13px; border-radius: 999px; background: var(--tint); color: var(--maroon); font-size: 12.5px; font-weight: 700; }
+.ly-price-box { text-align: right; }
+.ly-price-box small { display: block; color: var(--muted); font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
+.ly-price-box strong { color: var(--maroon); font-family: var(--num); font-size: 21px; font-weight: 700; letter-spacing: -.02em; }
+.ly-book { width: 100%; justify-content: center; }
+
+/* ---------- kosong + pagination ---------- */
+.ly-empty { grid-column: 1 / -1; padding: 64px 24px 70px; border: 1px solid var(--line); border-radius: 30px; background: #fff; box-shadow: var(--shadow); text-align: center; }
+.ly-empty > i { display: grid; width: 92px; height: 92px; place-items: center; margin: 0 auto 22px; border-radius: 50%; background: var(--grad); color: #fff; font-size: 32px; box-shadow: 0 20px 36px -16px rgba(100, 23, 45, .7); }
+.ly-empty h3 { margin: 0 0 8px; color: var(--deep); font-family: var(--display); font-size: 26px; font-weight: 600; }
+.ly-empty p { max-width: 420px; margin: 0 auto 24px; color: var(--muted); font-size: 14.5px; line-height: 1.8; }
+
+/* ---------- pagination ---------- */
+.ly-pagination { display: flex; justify-content: center; margin-top: 44px; }
+.ly-pg { display: flex; flex-direction: column; align-items: center; gap: 16px; width: 100%; }
+.ly-pg-info { margin: 0; color: var(--muted); font-size: 13px; }
+.ly-pg-info b { color: var(--maroon); font-family: var(--num); font-weight: 700; }
+.ly-pg-list { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 6px; margin: 0; padding: 8px; list-style: none; border: 1px solid var(--line); border-radius: 999px; background: #fff; box-shadow: var(--shadow); }
+.ly-pg-item { margin: 0; padding: 0; }
+.ly-pg-link {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-width: 44px; height: 44px; padding: 0 14px; border: 1px solid transparent; border-radius: 999px;
+    color: var(--maroon); font-family: var(--num); font-size: 14px; font-weight: 700; text-decoration: none; cursor: pointer;
+    transition: background .3s ease, color .3s ease, transform .4s var(--ease), box-shadow .4s var(--ease);
+}
+a.ly-pg-link:hover { background: var(--tint); color: var(--maroon); text-decoration: none; transform: translateY(-2px); }
+a.ly-pg-link:focus-visible { outline: 2px solid var(--maroon-2); outline-offset: 2px; }
+.ly-pg-item.is-active .ly-pg-link { background: var(--grad); color: #fff; box-shadow: 0 12px 22px -12px rgba(100, 23, 45, .9); cursor: default; }
+.ly-pg-item.is-dots .ly-pg-link { min-width: 28px; padding: 0; color: var(--muted); cursor: default; }
+.ly-pg-edge { padding: 0 18px; border-color: var(--line-strong); font-family: inherit; font-size: 13px; }
+a.ly-pg-edge:hover { background: var(--maroon); border-color: var(--maroon); color: #fff; }
+a.ly-pg-edge:hover i { transform: translateX(0); }
+.ly-pg-item.is-disabled .ly-pg-link { border-color: var(--line); color: #BBA8AE; cursor: not-allowed; }
+.ly-pg-bar { width: 160px; height: 4px; overflow: hidden; border-radius: 4px; background: var(--tint); }
+.ly-pg-bar span { display: block; height: 100%; border-radius: 4px; background: var(--grad); transition: width .8s var(--ease); }
+
+/* ---------- responsif ---------- */
+@media (max-width: 1020px) { .ly-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) {
+    .ly-pg-text { display: none; }
+    .ly-pg-edge { padding: 0; min-width: 44px; }
+    .ly-pg-list { gap: 4px; padding: 6px; }
+    .ly-pg-link { min-width: 38px; height: 38px; padding: 0 10px; }
+    .ly-pg-edge { min-width: 38px; }
+    .ly-grid { grid-template-columns: 1fr; gap: 16px; }
+    .ly-card { border-radius: 24px; }
+    .ly-cats { flex-wrap: nowrap; margin-right: -15px; padding-right: 15px; overflow-x: auto; scrollbar-width: none; }
+    .ly-cats::-webkit-scrollbar { display: none; }
+    .ly-cat { flex-shrink: 0; }
+    .ly-search { padding-left: 16px; }
+    .ly-search .bkl-btn { padding: 0 20px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .ly-card, .ly-img img { transition: none; }
+}

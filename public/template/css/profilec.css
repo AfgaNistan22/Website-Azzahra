@@ -1,0 +1,985 @@
+/* =========================================================
+   AZZAHRA SALON & SPA MUSLIMAH
+   Halaman Akun: Detail Profil dan Ubah Password
+
+   Satu file bersama ini menggantikan profilei.css dan profilc.css.
+   Letakkan di: public/template/css/akun.css
+   Bahasa visual disamakan dengan halaman Layanan, Jadwal, dan Lokasi.
+   ========================================================= */
+
+.akun-page {
+    --ak-ink: #2C1A1F;
+    --ak-maroon: #64172D;
+    --ak-dark: #4A1220;
+    --ak-brass: #A98B4F;
+    --ak-brass-dark: #876B2E;
+    --ak-brass-light: #E4CF9E;
+
+    --ak-bg: #F7F5F4;
+    --ak-surface: #FFFFFF;
+    --ak-tint: #F5EDEF;
+    --ak-line: #E4DCDD;
+    --ak-line-soft: #EEE6E7;
+    --ak-muted: #6F5C62;
+
+    --ak-ok: #2E8B57;
+    --ak-ok-bg: #EAF3EC;
+    --ak-danger: #B3303C;
+    --ak-danger-bg: #FBEAEA;
+
+    --ak-radius: 10px;
+    --ak-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+    --ak-ease: cubic-bezier(.2, .7, .2, 1);
+
+    min-height: 80vh;
+    padding-bottom: 88px;
+    background: var(--ak-bg);
+    color: var(--ak-ink);
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+}
+
+.akun-page *,
+.akun-page *::before,
+.akun-page *::after {
+    box-sizing: border-box;
+}
+
+.akun-wrap {
+    width: min(1120px, calc(100% - 48px));
+    margin: 0 auto;
+}
+
+.akun-sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.akun-page a:focus-visible,
+.akun-page button:focus-visible,
+.akun-page input:focus-visible,
+.akun-page label:focus-visible {
+    outline: 2px solid var(--ak-brass);
+    outline-offset: 2px;
+}
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.akun-hero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding: 60px 0 52px;
+    border-bottom: 3px solid var(--ak-brass);
+    background: var(--ak-dark);
+    color: #fff;
+}
+
+.akun-hero::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Cdefs%3E%3Cg id='s' fill='none' stroke='white' stroke-opacity='.13'%3E%3Crect x='-20' y='-20' width='40' height='40'/%3E%3Crect x='-20' y='-20' width='40' height='40' transform='rotate(45)'/%3E%3C/g%3E%3C/defs%3E%3Cuse href='%23s' x='40' y='40'/%3E%3Cuse href='%23s'/%3E%3Cuse href='%23s' x='80'/%3E%3Cuse href='%23s' y='80'/%3E%3Cuse href='%23s' x='80' y='80'/%3E%3C/svg%3E");
+    background-size: 80px 80px;
+    -webkit-mask-image: linear-gradient(to right, transparent 15%, #000 90%);
+    mask-image: linear-gradient(to right, transparent 15%, #000 90%);
+    animation: akun-pan 70s linear infinite;
+}
+
+.akun-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 18px;
+    color: var(--ak-brass-light);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.akun-eyebrow::before {
+    content: "";
+    width: 36px;
+    height: 1px;
+    background: var(--ak-brass);
+}
+
+.akun-hero h1 {
+    margin: 0 0 14px;
+    color: #fff;
+    font-family: var(--ak-display);
+    font-size: clamp(32px, 4.2vw, 46px);
+    font-weight: 600;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+}
+
+.akun-hero p {
+    max-width: 560px;
+    margin: 0;
+    color: rgba(255, 255, 255, .82);
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+/* =========================================================
+   LAYOUT
+========================================================= */
+
+.akun-layout {
+    display: grid;
+    grid-template-columns: 280px minmax(0, 1fr);
+    gap: 24px;
+    align-items: start;
+    margin-top: 36px;
+}
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.akun-side {
+    position: sticky;
+    top: 24px;
+    overflow: hidden;
+    border: 1px solid var(--ak-line);
+    border-radius: var(--ak-radius);
+    background: var(--ak-surface);
+}
+
+.akun-user {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 24px;
+}
+
+.akun-avatar {
+    display: block;
+    flex-shrink: 0;
+    width: 64px;
+    height: 64px;
+    border: 2px solid var(--ak-brass);
+    border-radius: 50%;
+    object-fit: cover;
+    background: var(--ak-tint);
+}
+
+.akun-user-text {
+    min-width: 0;
+}
+
+.akun-user-name {
+    color: var(--ak-dark);
+    font-family: var(--ak-display);
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+}
+
+.akun-user-email {
+    margin-top: 2px;
+    color: var(--ak-muted);
+    font-size: 13px;
+    overflow-wrap: anywhere;
+}
+
+.akun-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 8px;
+    border-top: 1px solid var(--ak-line-soft);
+}
+
+.akun-nav-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    color: var(--ak-muted);
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background .2s ease, color .2s ease;
+}
+
+.akun-nav-item i {
+    width: 16px;
+    text-align: center;
+    font-size: 13px;
+}
+
+.akun-nav-item:hover {
+    background: var(--ak-tint);
+    color: var(--ak-maroon);
+    text-decoration: none;
+}
+
+.akun-nav-item.is-active {
+    background: var(--ak-tint);
+    color: var(--ak-maroon);
+    font-weight: 600;
+}
+
+.akun-nav-item.is-active::before {
+    content: "";
+    position: absolute;
+    top: 10px;
+    bottom: 10px;
+    left: 0;
+    width: 3px;
+    border-radius: 3px;
+    background: var(--ak-brass);
+    transform-origin: center;
+    animation: akun-grow .5s var(--ak-ease) .5s backwards;
+}
+
+/* =========================================================
+   KARTU FORM
+========================================================= */
+
+.akun-card {
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid var(--ak-line);
+    border-radius: var(--ak-radius);
+    background: var(--ak-surface);
+}
+
+.akun-card-head {
+    padding: 28px 36px;
+    border-bottom: 1px solid var(--ak-line);
+}
+
+.akun-card-head h2 {
+    margin: 0 0 6px;
+    color: var(--ak-dark);
+    font-family: var(--ak-display);
+    font-size: clamp(23px, 2.6vw, 28px);
+    font-weight: 600;
+    line-height: 1.25;
+}
+
+.akun-card-head p {
+    margin: 0;
+    color: var(--ak-muted);
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.akun-card-body {
+    padding: 32px 36px 36px;
+}
+
+.akun-form {
+    max-width: 640px;
+}
+
+/* =========================================================
+   NOTIFIKASI
+========================================================= */
+
+.akun-flash {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 28px;
+    padding: 14px 16px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 1.6;
+    animation: akun-slide .55s var(--ak-ease) .1s backwards;
+}
+
+.akun-flash > i:first-child {
+    margin-top: 3px;
+}
+
+.akun-flash span {
+    flex: 1;
+}
+
+.akun-flash.is-success {
+    border-color: #BFD8C5;
+    background: var(--ak-ok-bg);
+    color: #2F5A3C;
+}
+
+.akun-flash.is-error {
+    border-color: #EBC1C4;
+    background: var(--ak-danger-bg);
+    color: #8E2A32;
+}
+
+.akun-flash-close {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    margin: -2px -4px 0 0;
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    color: inherit;
+    font-size: 12px;
+    cursor: pointer;
+    opacity: .7;
+    transition: opacity .2s ease, background .2s ease;
+}
+
+.akun-flash-close:hover {
+    background: rgba(0, 0, 0, .06);
+    opacity: 1;
+}
+
+.akun-flash.is-leaving {
+    opacity: 0;
+    transform: translateY(-6px);
+    transition: opacity .25s ease, transform .25s ease;
+}
+
+/* =========================================================
+   FOTO PROFIL
+========================================================= */
+
+.akun-photo {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 28px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--ak-line-soft);
+}
+
+.akun-photo-zone {
+    position: relative;
+    flex-shrink: 0;
+    width: 124px;
+    height: 124px;
+    overflow: hidden;
+    border: 1px solid var(--ak-line);
+    border-radius: 16px;
+    background: var(--ak-tint);
+    transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.akun-photo-zone.is-dragover {
+    box-shadow: 0 0 0 3px var(--ak-brass);
+    transform: scale(1.03);
+}
+
+.akun-photo-zone img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.akun-photo-zone img.is-changed {
+    animation: akun-pop .45s var(--ak-ease);
+}
+
+.akun-file {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.akun-photo-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin: 0;
+    background: rgba(74, 18, 32, .74);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity .25s ease;
+}
+
+.akun-photo-overlay i {
+    font-size: 20px;
+}
+
+.akun-photo-zone:hover .akun-photo-overlay,
+.akun-file:focus-visible + .akun-photo-overlay {
+    opacity: 1;
+}
+
+.akun-photo-info {
+    flex: 1 1 240px;
+    min-width: 0;
+}
+
+.akun-photo-title {
+    margin-bottom: 4px;
+    color: var(--ak-ink);
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.akun-photo-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 18px;
+    margin-top: 14px;
+}
+
+/* =========================================================
+   FIELD
+========================================================= */
+
+.akun-field {
+    margin-bottom: 24px;
+}
+
+.akun-field > label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--ak-ink);
+    font-size: 14px;
+    font-weight: 600;
+    transition: color .2s ease;
+}
+
+.akun-field:focus-within > label {
+    color: var(--ak-maroon);
+}
+
+.akun-control {
+    position: relative;
+}
+
+.akun-input {
+    display: block;
+    width: 100%;
+    min-height: 48px;
+    padding: 0 15px;
+    border: 1px solid var(--ak-line);
+    border-radius: 8px;
+    background: #fff;
+    color: var(--ak-ink);
+    font-family: inherit;
+    font-size: 15px;
+    box-shadow: none;
+    transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+}
+
+.akun-input:hover {
+    border-color: #CDBFC3;
+}
+
+.akun-input:focus {
+    border-color: var(--ak-maroon);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(100, 23, 45, .12);
+}
+
+.akun-input.has-icon   { padding-left: 44px; }
+.akun-input.has-toggle { padding-right: 52px; }
+
+.akun-input.is-invalid {
+    border-color: var(--ak-danger);
+    animation: akun-shake .4s ease;
+}
+
+.akun-input.is-invalid:focus {
+    box-shadow: 0 0 0 3px rgba(179, 48, 60, .14);
+}
+
+.akun-input[readonly] {
+    padding-right: 46px;
+    border-style: dashed;
+    background: #FBF9F9;
+    color: var(--ak-muted);
+    cursor: not-allowed;
+}
+
+.akun-field-icon,
+.akun-lock {
+    position: absolute;
+    top: 50%;
+    color: var(--ak-muted);
+    font-size: 14px;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.akun-field-icon { left: 16px; }
+.akun-lock       { right: 16px; }
+
+.akun-eye {
+    position: absolute;
+    top: 50%;
+    right: 6px;
+    display: grid;
+    width: 40px;
+    height: 38px;
+    place-items: center;
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--ak-muted);
+    font-size: 14px;
+    cursor: pointer;
+    transform: translateY(-50%);
+    transition: color .2s ease, background .2s ease;
+}
+
+.akun-eye:hover {
+    background: var(--ak-tint);
+    color: var(--ak-maroon);
+}
+
+.akun-hint {
+    margin: 8px 0 0;
+    color: var(--ak-muted);
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.akun-error {
+    margin: 8px 0 0;
+    color: var(--ak-danger);
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.6;
+    animation: akun-slide .35s var(--ak-ease);
+}
+
+.akun-error[hidden] {
+    display: none;
+}
+
+.akun-caps {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 8px 0 0;
+    color: var(--ak-brass-dark);
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.akun-caps[hidden] {
+    display: none;
+}
+
+/* =========================================================
+   KEKUATAN PASSWORD
+========================================================= */
+
+.akun-strength {
+    margin-top: 14px;
+}
+
+.akun-strength-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+}
+
+.akun-strength-bar span {
+    height: 5px;
+    border-radius: 5px;
+    background: var(--ak-line-soft);
+    transition: background .3s ease, transform .3s var(--ak-ease);
+    transform-origin: left;
+}
+
+.akun-strength[data-level="1"] .akun-strength-bar span:nth-child(-n+1) { background: var(--ak-danger); }
+.akun-strength[data-level="2"] .akun-strength-bar span:nth-child(-n+2) { background: #C99A3B; }
+.akun-strength[data-level="3"] .akun-strength-bar span:nth-child(-n+3) { background: #5FA37C; }
+.akun-strength[data-level="4"] .akun-strength-bar span:nth-child(-n+4) { background: var(--ak-ok); }
+
+.akun-strength-label {
+    margin-top: 8px;
+    color: var(--ak-muted);
+    font-size: 13px;
+}
+
+.akun-strength-label b {
+    color: var(--ak-ink);
+    font-weight: 600;
+}
+
+.akun-rules {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px 16px;
+    margin: 16px 0 0;
+    padding: 16px 18px;
+    border: 1px solid var(--ak-line-soft);
+    border-radius: 8px;
+    background: #FCFAFA;
+    list-style: none;
+}
+
+.akun-rules li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--ak-muted);
+    font-size: 13px;
+    transition: color .25s ease;
+}
+
+.akun-rules li i {
+    display: grid;
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    place-items: center;
+    border: 1px solid var(--ak-line);
+    border-radius: 50%;
+    background: #fff;
+    color: transparent;
+    font-size: 9px;
+    transition: background .25s ease, border-color .25s ease, color .25s ease;
+}
+
+.akun-rules li.is-met {
+    color: var(--ak-ink);
+}
+
+.akun-rules li.is-met i {
+    border-color: var(--ak-ok);
+    background: var(--ak-ok);
+    color: #fff;
+    animation: akun-pop .4s var(--ak-ease);
+}
+
+.akun-match {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 8px 0 0;
+    font-size: 13px;
+    font-weight: 500;
+    animation: akun-slide .35s var(--ak-ease);
+}
+
+.akun-match[hidden] {
+    display: none;
+}
+
+.akun-match.is-ok  { color: var(--ak-ok); }
+.akun-match.is-bad { color: var(--ak-danger); }
+
+/* =========================================================
+   TOMBOL
+========================================================= */
+
+.akun-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 12px;
+    padding-top: 26px;
+    border-top: 1px solid var(--ak-line-soft);
+}
+
+.akun-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 46px;
+    padding: 0 24px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background .25s ease, color .25s ease, border-color .25s ease;
+}
+
+.akun-btn:active {
+    transform: scale(.985);
+}
+
+.akun-btn-primary {
+    border-color: var(--ak-maroon);
+    background: var(--ak-maroon);
+    color: #fff;
+}
+
+.akun-btn-primary:hover {
+    border-color: var(--ak-dark);
+    background: var(--ak-dark);
+    color: #fff;
+    text-decoration: none;
+}
+
+.akun-btn-line {
+    border-color: var(--ak-line);
+    background: #fff;
+    color: var(--ak-maroon);
+}
+
+.akun-btn-line:hover {
+    border-color: var(--ak-maroon);
+    background: var(--ak-tint);
+    color: var(--ak-dark);
+    text-decoration: none;
+}
+
+.akun-btn-sm {
+    min-height: 38px;
+    padding: 0 16px;
+    font-size: 13px;
+}
+
+.akun-link {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--ak-maroon);
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.akun-link:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+.akun-link[hidden] {
+    display: none;
+}
+
+.akun-btn-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: opacity .2s ease;
+}
+
+.akun-spinner {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(255, 255, 255, .35);
+    border-top-color: #fff;
+    border-radius: 50%;
+    opacity: 0;
+}
+
+.akun-btn.is-loading {
+    pointer-events: none;
+}
+
+.akun-btn.is-loading .akun-btn-label {
+    opacity: 0;
+}
+
+.akun-btn.is-loading .akun-spinner {
+    opacity: 1;
+    animation: akun-spin .7s linear infinite;
+}
+
+/* =========================================================
+   ANIMASI
+========================================================= */
+
+@keyframes akun-rise {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: none; }
+}
+
+@keyframes akun-slide {
+    from { opacity: 0; transform: translateY(-10px); }
+    to   { opacity: 1; transform: none; }
+}
+
+@keyframes akun-pan {
+    from { background-position: 0 0; }
+    to   { background-position: 160px 160px; }
+}
+
+@keyframes akun-pop {
+    0%   { transform: scale(.9); }
+    60%  { transform: scale(1.08); }
+    100% { transform: scale(1); }
+}
+
+@keyframes akun-grow {
+    from { transform: scaleY(0); }
+    to   { transform: scaleY(1); }
+}
+
+@keyframes akun-shake {
+    0%, 100% { transform: translateX(0); }
+    25%      { transform: translateX(-5px); }
+    75%      { transform: translateX(5px); }
+}
+
+@keyframes akun-spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Hero: satu rangkaian masuk saat halaman dibuka */
+.akun-eyebrow  { animation: akun-rise .8s var(--ak-ease) .10s backwards; }
+.akun-hero h1  { animation: akun-rise .9s var(--ak-ease) .25s backwards; }
+.akun-hero p   { animation: akun-rise .9s var(--ak-ease) .42s backwards; }
+
+/* Sidebar, kartu, dan tiap bagian form masuk berurutan */
+.akun-step {
+    animation: akun-rise .8s var(--ak-ease) backwards;
+    animation-delay: calc(var(--d, 0) * 90ms + 150ms);
+}
+
+/* =========================================================
+   TABLET DAN PONSEL
+========================================================= */
+
+@media (max-width: 900px) {
+    .akun-layout {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .akun-side {
+        position: static;
+    }
+
+    .akun-user {
+        padding: 18px 20px;
+    }
+
+    .akun-avatar {
+        width: 54px;
+        height: 54px;
+    }
+
+    .akun-nav {
+        flex-direction: row;
+        gap: 6px;
+    }
+
+    .akun-nav-item {
+        flex: 1;
+        justify-content: center;
+        padding: 11px 10px;
+    }
+
+    .akun-nav-item.is-active::before {
+        display: none;
+    }
+}
+
+@media (max-width: 576px) {
+    .akun-wrap {
+        width: calc(100% - 32px);
+    }
+
+    .akun-page {
+        padding-bottom: 56px;
+    }
+
+    .akun-hero {
+        padding: 44px 0 40px;
+    }
+
+    .akun-hero p {
+        font-size: 15px;
+    }
+
+    .akun-layout {
+        margin-top: 24px;
+    }
+
+    .akun-card-head {
+        padding: 22px 20px;
+    }
+
+    .akun-card-body {
+        padding: 24px 20px 26px;
+    }
+
+    .akun-photo {
+        gap: 18px;
+    }
+
+    .akun-photo-zone {
+        width: 104px;
+        height: 104px;
+    }
+
+    .akun-rules {
+        grid-template-columns: 1fr;
+        padding: 14px 16px;
+    }
+
+    .akun-actions {
+        flex-direction: column-reverse;
+    }
+
+    .akun-actions .akun-btn {
+        width: 100%;
+    }
+
+    .akun-nav-item {
+        font-size: 13px;
+    }
+}
+
+/* =========================================================
+   HORMATI PENGATURAN PENGURANGAN GERAK
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+    .akun-hero::before,
+    .akun-eyebrow,
+    .akun-hero h1,
+    .akun-hero p,
+    .akun-step,
+    .akun-flash,
+    .akun-error,
+    .akun-match,
+    .akun-input.is-invalid,
+    .akun-nav-item.is-active::before,
+    .akun-photo-zone img.is-changed,
+    .akun-rules li.is-met i,
+    .akun-btn.is-loading .akun-spinner {
+        animation: none !important;
+    }
+
+    .akun-btn.is-loading .akun-spinner {
+        animation: none !important;
+        opacity: 1;
+    }
+
+    .akun-page * {
+        transition: none !important;
+    }
+}
