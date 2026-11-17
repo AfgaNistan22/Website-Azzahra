@@ -55,10 +55,10 @@
 
                 <div class="col-lg-6">
                     <div class="pm-image">
-                        <img src="{{ asset('template/img/slider2.JPG') }}"
+                        <img src="{{ asset('template/img/slider2.jpg') }}"
                              alt="Perawatan Azzahra Salon dan Spa Muslimah"
                              loading="lazy"
-                             onerror="this.onerror=null; this.src='{{ asset('template/img/service-default.jpg') }}';">
+                             onerror="this.onerror=null; this.src='{{ asset('template/img/service-default.png') }}';">
 
                         <svg class="pm-sticker" viewBox="0 0 120 120" aria-hidden="true">
                             <defs><path id="pmCircle" d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0"/></defs>
