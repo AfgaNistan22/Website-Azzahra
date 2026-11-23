@@ -29,6 +29,7 @@ use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\RiwayatReservasiController;
 use App\Http\Controllers\HalamanPublikController;
 use App\Http\Controllers\TestimoniController;
+use App\Http\Controllers\UserManagementController;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
@@ -412,6 +413,12 @@ Route::middleware(['auth', 'admin'])->group(function () {
         ->only(['index', 'store', 'update', 'destroy'])
         ->parameters(['galeri-admin' => 'galeri'])
         ->names('galeri-admin');
+
+    // ---------------- PENGELOLAAN AKUN USER / NASABAH ----------------
+    Route::get('/users', [UserManagementController::class, 'index'])->name('users.index');
+    Route::post('/users/{user}/reset-password', [UserManagementController::class, 'resetPassword'])->name('users.reset-password');
+    Route::patch('/users/{user}/status', [UserManagementController::class, 'updateStatus'])->name('users.status');
+    Route::delete('/users/{user}', [UserManagementController::class, 'destroy'])->name('users.destroy');
 
 });
 

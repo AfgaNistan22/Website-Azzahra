@@ -68,7 +68,12 @@
                     </div>
 
                     <div class="au-field @error('password') has-error @enderror" style="--i:4">
-                        <label for="password">Password</label>
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                            <label for="password" style="margin-bottom:0;">Password</label>
+                            <a href="javascript:void(0)" onclick="bukaModalLupaPassword()" style="font-size:12px; color:#C2415D; font-weight:700; text-decoration:none;">
+                                Lupa password?
+                            </a>
+                        </div>
                         <div class="au-input">
                             <i class="fas fa-lock" aria-hidden="true"></i>
                             <input type="password" id="password" name="password"
@@ -99,6 +104,70 @@
 
     </div>
 </main>
+
+{{-- MODAL BANTUAN LUPA PASSWORD --}}
+<div id="modalLupaPassword" class="au-modal-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(42, 10, 11, 0.72); backdrop-filter:blur(6px); z-index:99999; justify-content:center; align-items:center; padding:16px;">
+    <div class="au-modal-card" style="background:#fff; width:100%; max-width:440px; border-radius:24px; padding:32px 24px; box-shadow:0 24px 60px rgba(100,23,45,0.45); text-align:center; position:relative; animation:au-rise .35s ease;">
+        <button type="button" onclick="tutupModalLupaPassword()" style="position:absolute; top:18px; right:18px; background:none; border:none; font-size:24px; color:#999; cursor:pointer; line-height:1;" aria-label="Tutup">&times;</button>
+        
+        <div style="width:68px; height:68px; margin:0 auto 16px; border-radius:50%; background:#fdf2f4; display:grid; place-items:center; color:#C2415D; font-size:28px;">
+            <i class="fas fa-key"></i>
+        </div>
+
+        <h3 style="font-size:1.3rem; font-weight:800; color:#3a1214; margin-bottom:8px;">Bantuan Lupa Kata Sandi</h3>
+        <p style="font-size:0.875rem; color:#666; margin-bottom:22px; line-height:1.5;">
+            Untuk menjaga keamanan akun Anda, silakan gunakan opsi pemulihan akun di bawah ini:
+        </p>
+
+        {{-- OPSI 1: CHAT WHATSAPP ADMIN --}}
+        @php
+            $waAdmin = '6281246771771';
+            $pesanWa = rawurlencode("Halo Admin Azzahra Salon & Spa,\nSaya lupa kata sandi akun saya.\nMohon bantuan untuk melakukan reset password akun saya. Terima kasih.");
+            $linkWa = 'https://wa.me/' . $waAdmin . '?text=' . $pesanWa;
+        @endphp
+        <a href="{{ $linkWa }}" target="_blank" rel="noopener" style="display:flex; align-items:center; justify-content:center; gap:10px; width:100%; padding:14px; margin-bottom:12px; background:linear-gradient(135deg, #25D366, #128C7E); color:#fff; border-radius:14px; text-decoration:none; font-weight:700; font-size:0.95rem; box-shadow:0 8px 20px -6px rgba(18,140,126,0.6);">
+            <i class="fab fa-whatsapp fa-lg"></i>
+            <span>Bantuan Reset via WhatsApp Admin</span>
+        </a>
+
+        {{-- OPSI 2: LOGIN VIA GOOGLE --}}
+        @if (\Illuminate\Support\Facades\Route::has('auth.social.redirect'))
+            <a href="{{ route('auth.social.redirect', 'google') }}" style="display:flex; align-items:center; justify-content:center; gap:10px; width:100%; padding:12px; margin-bottom:14px; background:#fff; color:#3c4043; border:1px solid #dadce0; border-radius:14px; text-decoration:none; font-weight:600; font-size:0.9rem;">
+                <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.616z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.836.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z"/><path fill="#FBBC05" d="M3.964 10.707c-.18-.54-.282-1.117-.282-1.707 0-.59.102-1.167.282-1.707V4.961H.957C.347 6.175 0 7.55 0 9s.347 2.825.957 4.039l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.961L3.964 7.293C4.672 5.166 6.656 3.58 9 3.58z"/></svg>
+                <span>Masuk Tanpa Password via Google</span>
+            </a>
+        @endif
+
+        <div style="font-size:0.75rem; color:#888; margin-bottom:14px; background:#faf7f8; padding:8px 12px; border-radius:10px;">
+            <i class="fas fa-info-circle mr-1"></i> Admin akan meresetkan kata sandi sementara setelah memverifikasi nomor telepon akun Anda.
+        </div>
+
+        <button type="button" onclick="tutupModalLupaPassword()" style="background:none; border:none; color:#777; font-size:0.85rem; cursor:pointer; text-decoration:underline;">
+            Kembali ke halaman login
+        </button>
+    </div>
+</div>
+
+<script>
+function bukaModalLupaPassword() {
+    var modal = document.getElementById('modalLupaPassword');
+    if (modal) {
+        modal.style.display = 'flex';
+    }
+}
+function tutupModalLupaPassword() {
+    var modal = document.getElementById('modalLupaPassword');
+    if (modal) {
+        modal.style.display = 'none';
+    }
+}
+window.addEventListener('click', function(e) {
+    var modal = document.getElementById('modalLupaPassword');
+    if (e.target === modal) {
+        tutupModalLupaPassword();
+    }
+});
+</script>
 
 <script src="{{ asset('template/js/auth-modern.js') }}?v={{ file_exists(public_path('template/js/auth-modern.js')) ? filemtime(public_path('template/js/auth-modern.js')) : time() }}" defer></script>
 

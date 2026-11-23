@@ -10,7 +10,8 @@
 
     $penggunaAktif =
         request()->is('pelanggan*') ||
-        request()->is('pegawai*');
+        request()->is('pegawai*') ||
+        request()->is('users*');
 
     $perusahaanAktif =
         request()->is('cabang*') ||
@@ -154,6 +155,22 @@
 
                     <span class="submenu-label">
                         Pegawai
+                    </span>
+
+                </a>
+
+
+                {{-- AKUN USER / NASABAH --}}
+
+                <a href="{{ route('users.index') }}"
+                   class="submenu-link {{ request()->is('users*') ? 'submenu-active' : '' }}">
+
+                    <span class="submenu-icon">
+                        <i class="fas fa-users-cog"></i>
+                    </span>
+
+                    <span class="submenu-label">
+                        Akun Pengguna
                     </span>
 
                 </a>

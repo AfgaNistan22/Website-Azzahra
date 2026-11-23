@@ -93,6 +93,15 @@
                     Ubah Password
                 </a>
 
+                {{-- Kelola Akun User (khusus admin) --}}
+                @if ($user->isAdmin())
+                    <a class="dropdown-item elite-item {{ request()->routeIs('users.*') ? 'active-item' : '' }}"
+                       href="{{ route('users.index') }}">
+                        <i class="fas fa-users-cog fa-sm fa-fw mr-2"></i>
+                        Kelola Akun User
+                    </a>
+                @endif
+
                 {{-- Kelola Galeri (khusus admin) --}}
                 @if ($user->isAdmin())
                     <a class="dropdown-item elite-item {{ request()->routeIs('galeri-admin.*') ? 'active-item' : '' }}"
