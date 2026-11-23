@@ -404,7 +404,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     Route::resource('promo', PromoController::class);
 
-    // Pengelolaan galeri foto (unggah, ubah, hapus)
+    // Pengelolaan galeri foto (unggah, ubah, hapus satu per satu atau massal)
+    Route::match(['post', 'delete'], '/galeri-admin/hapus-massal', [GaleriAdminController::class, 'hapusMassal'])
+        ->name('galeri-admin.hapus-massal');
+
     Route::resource('galeri-admin', GaleriAdminController::class)
         ->only(['index', 'store', 'update', 'destroy'])
         ->parameters(['galeri-admin' => 'galeri'])

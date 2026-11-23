@@ -79,9 +79,40 @@ class GaleriAdminController extends Controller
 
     public function destroy(Galeri $galeri)
     {
-        Storage::disk('public')->delete($galeri->foto);
+        if (!empty($galeri->foto)) {
+            Storage::disk('public')->delete($galeri->foto);
+        }
         $galeri->delete();
 
         return back()->with('success', 'Foto galeri berhasil dihapus.');
+    }
+
+    /** Hapus banyak foto galeri sekaligus yang dipilih admin (bulk delete). */
+    public function hapusMassal(Request $request)
+    {
+        $data = $request->validate([
+            'ids'   => ['required', 'array', 'min:1'],
+            'ids.*' => ['required', 'integer'],
+        ], [
+            'ids.required' => 'Pilih minimal satu foto yang ingin dihapus.',
+            'ids.min'      => 'Pilih minimal satu foto yang ingin dihapus.',
+        ]);
+
+        $daftarGaleri = Galeri::whereIn('id', $data['ids'])->get();
+
+        if ($daftarGaleri->isEmpty()) {
+            return back()->with('error', 'Tidak ada foto yang ditemukan untuk dihapus.');
+        }
+
+        $jumlah = 0;
+        foreach ($daftarGaleri as $g) {
+            if (!empty($g->foto)) {
+                Storage::disk('public')->delete($g->foto);
+            }
+            $g->delete();
+            $jumlah++;
+        }
+
+        return back()->with('success', "{$jumlah} foto galeri terpilih berhasil dihapus.");
     }
 }

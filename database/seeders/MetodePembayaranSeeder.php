@@ -14,15 +14,16 @@ class MetodePembayaranSeeder extends Seeder
     public function run(): void
     {
         $data = [
-            ['metode' => 'Transfer BCA', 'norek' => '1234567890',   'an' => 'Azzahra Salon & Spa'],
-            ['metode' => 'Transfer BRI', 'norek' => '0987654321',   'an' => 'Azzahra Salon & Spa'],
-            ['metode' => 'DANA',         'norek' => '081234567890', 'an' => 'Azzahra Salon & Spa'],
+            ['metode' => 'Transfer BCA', 'tipe' => 'Transfer', 'norek' => '1234567890',   'an' => 'Azzahra Salon & Spa', 'aktif' => true],
+            ['metode' => 'Transfer BRI', 'tipe' => 'Transfer', 'norek' => '0987654321',   'an' => 'Azzahra Salon & Spa', 'aktif' => true],
+            ['metode' => 'DANA',         'tipe' => 'Transfer', 'norek' => '081234567890', 'an' => 'Azzahra Salon & Spa', 'aktif' => true],
+            ['metode' => 'QRIS',         'tipe' => 'QRIS',     'norek' => '-',            'an' => 'Azzahra Salon & Spa', 'aktif' => true],
         ];
 
         foreach ($data as $item) {
             MetodePembayaran::updateOrCreate(
                 ['metode' => $item['metode']],
-                ['norek' => $item['norek'], 'an' => $item['an'], 'aktif' => true]
+                $item
             );
         }
 

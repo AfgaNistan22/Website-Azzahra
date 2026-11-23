@@ -84,6 +84,11 @@
     .gla-table tbody tr { transition: background .2s ease; }
     .gla-table tbody tr:hover { background: #fffafa; }
     .gla-table tbody tr.is-dirty { background: #fffbef; box-shadow: inset 3px 0 0 var(--gla-gold); }
+    .gla-table tbody tr.is-selected { background: #fdf2f4 !important; }
+    .gla-check-col { width: 44px; text-align: center; vertical-align: middle !important; padding: 12px 8px !important; }
+    .gla-check-box { width: 17px; height: 17px; cursor: pointer; accent-color: var(--gla-red); vertical-align: middle; }
+    .gla-bulk-actions { display: inline-flex; align-items: center; gap: 8px; }
+    .gla-bulk-pill { padding: 4px 10px; border-radius: 20px; background: #fdeff2; color: #8a1b2e; font-size: .78rem; font-weight: 700; border: 1px solid #f0c1c8; }
     .gla-table .form-control-sm { height: 38px; border-radius: 9px; }
 
     .gla-thumb { position: relative; display: block; width: 92px; }
@@ -134,6 +139,13 @@
     @if (session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert" style="border-radius:12px">
             <i class="fas fa-check-circle mr-1 me-1"></i> {{ session('success') }}
+            <button type="button" class="close" data-dismiss="alert" data-bs-dismiss="alert" aria-label="Tutup"><span aria-hidden="true">&times;</span></button>
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" style="border-radius:12px">
+            <i class="fas fa-exclamation-triangle mr-1 me-1"></i> {{ session('error') }}
             <button type="button" class="close" data-dismiss="alert" data-bs-dismiss="alert" aria-label="Tutup"><span aria-hidden="true">&times;</span></button>
         </div>
     @endif
@@ -215,8 +227,25 @@
     {{-- ================= DAFTAR ================= --}}
     <div class="gla-card">
         <div class="gla-card-head">
-            <h2><i class="fas fa-th-large mr-2 me-2"></i>Semua foto</h2>
-            <small>{{ $galeri->total() }} foto</small>
+            <div class="d-flex align-items-center flex-wrap gap-2">
+                <h2><i class="fas fa-th-large mr-2 me-2"></i>Semua foto</h2>
+                <small>{{ $galeri->total() }} foto</small>
+            </div>
+
+            {{-- Form & Aksi Hapus Massal --}}
+            <div class="gla-bulk-actions" id="glaBulkToolbar">
+                <span id="glaLabelTerpilih" class="gla-bulk-pill" style="display: none;">
+                    <i class="fas fa-check-square mr-1 me-1"></i> <span id="glaJmlTerpilih">0</span> foto dipilih
+                </span>
+
+                <form action="{{ route('galeri-admin.hapus-massal') }}" method="POST" id="formHapusMassal" style="margin: 0; display: inline;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" id="btnHapusMassal" class="btn btn-sm btn-danger text-white shadow-sm" style="display: none; border-radius: 9px; font-weight: 600;">
+                        <i class="far fa-trash-alt mr-1 me-1"></i> Hapus Foto Terpilih (<span id="btnHapusCount">0</span>)
+                    </button>
+                </form>
+            </div>
         </div>
 
         @if ($galeri->count() > 0)
@@ -225,6 +254,9 @@
                 <table class="table gla-table">
                     <thead>
                         <tr>
+                            <th class="gla-check-col">
+                                <input type="checkbox" id="glaPilihSemua" class="gla-check-box" title="Pilih Semua Foto di Halaman Ini" aria-label="Pilih Semua">
+                            </th>
                             <th style="width:128px">Foto</th>
                             <th>Judul</th>
                             <th style="min-width:160px">Kategori</th>
@@ -238,7 +270,11 @@
                         @foreach ($galeri as $g)
                             @php $fid = 'u' . $g->id; @endphp
 
-                            <tr data-form="{{ $fid }}">
+                            <tr data-form="{{ $fid }}" data-id="{{ $g->id }}">
+
+                                <td class="gla-check-col">
+                                    <input type="checkbox" name="ids[]" value="{{ $g->id }}" class="gla-check-box gla-check-item" form="formHapusMassal" aria-label="Pilih foto {{ $g->judul ?: 'ID '.$g->id }}">
+                                </td>
 
                                 <td>
                                     {{-- form ubah per baris (kolom lain terhubung lewat atribut form=) --}}
@@ -505,6 +541,94 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    /* =========================================================
+       3. Pilihan Massal (Bulk Delete): pilih banyak foto & hapus bersamaan
+    ========================================================= */
+    var cbPilihSemua = document.getElementById('glaPilihSemua');
+    var listCbItem   = document.querySelectorAll('.gla-check-item');
+    var labelTerpilih = document.getElementById('glaLabelTerpilih');
+    var jmlTerpilih  = document.getElementById('glaJmlTerpilih');
+    var btnHapus     = document.getElementById('btnHapusMassal');
+    var btnHapusCount = document.getElementById('btnHapusCount');
+    var formHapus    = document.getElementById('formHapusMassal');
+
+    function updatePilihanMassal() {
+        var checkedItems = document.querySelectorAll('.gla-check-item:checked');
+        var count = checkedItems.length;
+
+        listCbItem.forEach(function (cb) {
+            var tr = cb.closest('tr');
+            if (tr) {
+                tr.classList.toggle('is-selected', cb.checked);
+            }
+        });
+
+        if (count > 0) {
+            if (jmlTerpilih) jmlTerpilih.textContent = count;
+            if (btnHapusCount) btnHapusCount.textContent = count;
+            if (labelTerpilih) labelTerpilih.style.display = 'inline-block';
+            if (btnHapus) btnHapus.style.display = 'inline-block';
+        } else {
+            if (labelTerpilih) labelTerpilih.style.display = 'none';
+            if (btnHapus) btnHapus.style.display = 'none';
+        }
+
+        if (cbPilihSemua) {
+            cbPilihSemua.checked = (count > 0 && count === listCbItem.length);
+            cbPilihSemua.indeterminate = (count > 0 && count < listCbItem.length);
+        }
+    }
+
+    if (cbPilihSemua) {
+        cbPilihSemua.addEventListener('change', function () {
+            var state = cbPilihSemua.checked;
+            listCbItem.forEach(function (cb) {
+                cb.checked = state;
+            });
+            updatePilihanMassal();
+        });
+    }
+
+    listCbItem.forEach(function (cb) {
+        cb.addEventListener('change', updatePilihanMassal);
+    });
+
+    if (formHapus) {
+        formHapus.addEventListener('submit', function (e) {
+            var checkedItems = document.querySelectorAll('.gla-check-item:checked');
+            if (checkedItems.length === 0) {
+                e.preventDefault();
+                alert('Pilih minimal satu foto galeri yang ingin dihapus.');
+                return false;
+            }
+
+            var konfirmasi = confirm('Yakin ingin menghapus ' + checkedItems.length + ' foto terpilih dari galeri?\nFoto yang dihapus tidak bisa dikembalikan.');
+            if (!konfirmasi) {
+                e.preventDefault();
+                return false;
+            }
+
+            window.__glaMenyimpan = true;
+
+            // Bersihkan hidden inputs lama
+            formHapus.querySelectorAll('input[name="ids[]"]').forEach(function (el) { el.remove(); });
+
+            // Suntikkan ID yang dipilih ke dalam form
+            checkedItems.forEach(function (cb) {
+                var input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'ids[]';
+                input.value = cb.value;
+                formHapus.appendChild(input);
+            });
+
+            if (btnHapus) {
+                btnHapus.disabled = true;
+                btnHapus.innerHTML = '<i class="fas fa-spinner fa-spin mr-1 me-1"></i> Menghapus...';
+            }
+        });
+    }
+
     // beri peringatan bila ada perubahan baris yang belum disimpan
     window.addEventListener('beforeunload', function (e) {
         if (document.querySelector('tr.is-dirty') && !window.__glaMenyimpan) {
@@ -512,7 +636,7 @@ document.addEventListener('DOMContentLoaded', function () {
             e.returnValue = '';
         }
     });
-    document.querySelectorAll('tr[data-form] form, #glaUpload').forEach(function (f) {
+    document.querySelectorAll('tr[data-form] form, #glaUpload, #formHapusMassal').forEach(function (f) {
         f.addEventListener('submit', function (e) { if (!e.defaultPrevented) window.__glaMenyimpan = true; });
     });
 });
