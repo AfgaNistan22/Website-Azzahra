@@ -51,8 +51,24 @@ class TestimoniController extends Controller
             'komentar.max'      => 'Komentar maksimal 600 karakter.',
         ]);
 
+        $user = $request->user();
+
+        // Validasi bisnis: Ulasan hanya untuk pelanggan yang memiliki riwayat reservasi
+        if (!$user->isAdmin()) {
+            $pelanggan = $user->pelanggan;
+            $sudahReservasi = $pelanggan && \App\Models\Reservasi::where('pelanggan_id', $pelanggan->id)
+                ->whereIn('status', ['Selesai', 'Dikonfirmasi'])
+                ->exists();
+
+            if (!$sudahReservasi) {
+                return back()
+                    ->withInput()
+                    ->withErrors(['komentar' => 'Ulasan hanya dapat dikirimkan oleh pelanggan yang telah memiliki reservasi di Azzahra Salon & Spa.']);
+            }
+        }
+
         $ulasan = Testimoni::updateOrCreate(
-            ['user_id' => $request->user()->id],
+            ['user_id' => $user->id],
             ['rating' => $data['rating'], 'komentar' => trim($data['komentar'])]
         );
 

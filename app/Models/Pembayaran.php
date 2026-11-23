@@ -19,6 +19,7 @@ class Pembayaran extends Model
         'jumlah',
         'jumlah_sebelum_diskon',
         'jumlah_diskon',
+        'bukti_bayar',
         'status',
         'catatan',
     ];

@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
                 'email' => 'admin@gmail.com',
             ],
             [
-                'name' => 'Admin bank',
+                'name' => 'Admin Salon',
                 'password' => 'admin123',
                 'status' => 'approved',
                 'role_id' => 1,

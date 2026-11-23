@@ -17,61 +17,22 @@ class DashboardController extends Controller
         try {
 
             // =====================================================
-            // KPI UTAMA
+            // KPI UTAMA & DATA RESERVASI (OPTIMIZED AGGREGATION)
             // =====================================================
 
-            $jumlahPelanggan = Pelanggan::count();
-            $jumlahPegawai = Pegawai::count();
-            $jumlahPerawatan = Perawatan::count();
-            $jumlahReservasi = Reservasi::count();
+            $stats = $this->getReservasiStats();
 
+            $jumlahPelanggan       = Pelanggan::count();
+            $jumlahPegawai         = Pegawai::count();
+            $jumlahPerawatan       = Perawatan::count();
+            $jumlahReservasi       = (int) $stats->total;
 
-            // =====================================================
-            // DATA RESERVASI
-            // =====================================================
-
-            // Reservasi hari ini
-            $reservasiHariIni = Reservasi::whereDate(
-                'tanggal',
-                Carbon::today()
-            )->count();
-
-
-            // Reservasi mendatang
-            $reservasiMendatang = Reservasi::whereDate(
-                'tanggal',
-                '>=',
-                Carbon::today()
-            )->count();
-
-
-            // Reservasi menunggu
-            $reservasiMenunggu = Reservasi::where(
-                'status',
-                'Menunggu'
-            )->count();
-
-
-            // Reservasi dikonfirmasi
-            $reservasiDikonfirmasi = Reservasi::where(
-                'status',
-                'Dikonfirmasi'
-            )->count();
-
-
-            // Reservasi selesai
-            $reservasiSelesai = Reservasi::where(
-                'status',
-                'Selesai'
-            )->count();
-
-
-            // Reservasi dibatalkan
-            $reservasiDibatalkan = Reservasi::where(
-                'status',
-                'Dibatalkan'
-            )->count();
-
+            $reservasiHariIni      = (int) $stats->hari_ini;
+            $reservasiMendatang    = (int) $stats->mendatang;
+            $reservasiMenunggu     = (int) $stats->menunggu;
+            $reservasiDikonfirmasi = (int) $stats->dikonfirmasi;
+            $reservasiSelesai      = (int) $stats->selesai;
+            $reservasiDibatalkan   = (int) $stats->dibatalkan;
 
             // =====================================================
             // RESERVASI TERBARU
@@ -87,28 +48,28 @@ class DashboardController extends Controller
                 ->limit(10)
                 ->get();
 
+            // =====================================================
+            // CHART RESERVASI 7 HARI TERAKHIR (SINGLE QUERY GROUP BY)
+            // =====================================================
 
-            // =====================================================
-            // CHART RESERVASI 7 HARI TERAKHIR
-            // =====================================================
+            $enamHariLalu = Carbon::today()->subDays(6)->toDateString();
+            $hariIni      = Carbon::today()->toDateString();
+
+            $dataPerHari = Reservasi::whereDate('tanggal', '>=', $enamHariLalu)
+                ->whereDate('tanggal', '<=', $hariIni)
+                ->selectRaw('DATE(tanggal) as tgl, COUNT(*) as jumlah')
+                ->groupBy('tgl')
+                ->pluck('jumlah', 'tgl')
+                ->all();
 
             $chartLabels = [];
             $chartValues = [];
 
             for ($i = 6; $i >= 0; $i--) {
-
-                $tanggal = Carbon::today()->subDays($i);
-
-                $jumlah = Reservasi::whereDate(
-                    'tanggal',
-                    $tanggal
-                )->count();
-
-                $chartLabels[] =
-                    $tanggal->translatedFormat('d M');
-
-                $chartValues[] =
-                    $jumlah;
+                $tglObj        = Carbon::today()->subDays($i);
+                $tglStr        = $tglObj->toDateString();
+                $chartLabels[] = $tglObj->translatedFormat('d M');
+                $chartValues[] = (int) ($dataPerHari[$tglStr] ?? 0);
             }
 
 
@@ -226,116 +187,63 @@ class DashboardController extends Controller
 
 
     // =========================================================
-    // LIVE DATA DASHBOARD
+    // LIVE DATA DASHBOARD (OPTIMIZED AGGREGATION)
     // =========================================================
 
     public function liveData()
     {
         try {
+            $stats = $this->getReservasiStats();
 
             return response()->json([
-
-                'success' => true,
-
-                'jumlahPelanggan' =>
-                    Pelanggan::count(),
-
-                'jumlahPegawai' =>
-                    Pegawai::count(),
-
-                'jumlahPerawatan' =>
-                    Perawatan::count(),
-
-                'jumlahReservasi' =>
-                    Reservasi::count(),
-
-
-                // =================================================
-                // RESERVASI HARI INI
-                // =================================================
-
-                'reservasiHariIni' =>
-                    Reservasi::whereDate(
-                        'tanggal',
-                        Carbon::today()
-                    )->count(),
-
-
-                // =================================================
-                // RESERVASI MENDATANG
-                // =================================================
-
-                'reservasiMendatang' =>
-                    Reservasi::whereDate(
-                        'tanggal',
-                        '>=',
-                        Carbon::today()
-                    )->count(),
-
-
-                // =================================================
-                // MENUNGGU
-                // =================================================
-
-                'reservasiMenunggu' =>
-                    Reservasi::where(
-                        'status',
-                        'Menunggu'
-                    )->count(),
-
-
-                // =================================================
-                // DIKONFIRMASI
-                // =================================================
-
-                'reservasiDikonfirmasi' =>
-                    Reservasi::where(
-                        'status',
-                        'Dikonfirmasi'
-                    )->count(),
-
-
-                // =================================================
-                // SELESAI
-                // =================================================
-
-                'reservasiSelesai' =>
-                    Reservasi::where(
-                        'status',
-                        'Selesai'
-                    )->count(),
-
-
-                // =================================================
-                // DIBATALKAN
-                // =================================================
-
-                'reservasiDibatalkan' =>
-                    Reservasi::where(
-                        'status',
-                        'Dibatalkan'
-                    )->count(),
-
+                'success'               => true,
+                'jumlahPelanggan'       => Pelanggan::count(),
+                'jumlahPegawai'         => Pegawai::count(),
+                'jumlahPerawatan'       => Perawatan::count(),
+                'jumlahReservasi'       => (int) $stats->total,
+                'reservasiHariIni'      => (int) $stats->hari_ini,
+                'reservasiMendatang'    => (int) $stats->mendatang,
+                'reservasiMenunggu'     => (int) $stats->menunggu,
+                'reservasiDikonfirmasi' => (int) $stats->dikonfirmasi,
+                'reservasiSelesai'      => (int) $stats->selesai,
+                'reservasiDibatalkan'   => (int) $stats->dibatalkan,
             ]);
-
 
         } catch (\Exception $e) {
-
             Log::error('Dashboard Live Error', [
-
                 'message' => $e->getMessage(),
-
             ]);
 
-
             return response()->json([
-
                 'success' => false,
-
-                'message' =>
-                    'Gagal memuat data dashboard'
-
+                'message' => 'Gagal memuat data dashboard'
             ], 500);
         }
+    }
+
+    /**
+     * Mengambil seluruh metrik statistik reservasi dalam satu query agregasi cepat.
+     */
+    private function getReservasiStats(): object
+    {
+        $today = Carbon::today()->toDateString();
+
+        return Reservasi::selectRaw("
+            COUNT(*) as total,
+            COUNT(CASE WHEN DATE(tanggal) = ? THEN 1 END) as hari_ini,
+            COUNT(CASE WHEN DATE(tanggal) >= ? THEN 1 END) as mendatang,
+            COUNT(CASE WHEN status = 'Menunggu' THEN 1 END) as menunggu,
+            COUNT(CASE WHEN status = 'Dikonfirmasi' THEN 1 END) as dikonfirmasi,
+            COUNT(CASE WHEN status = 'Selesai' THEN 1 END) as selesai,
+            COUNT(CASE WHEN status = 'Dibatalkan' THEN 1 END) as dibatalkan
+        ", [$today, $today])->first() ?? (object) [
+            'total'        => 0,
+            'hari_ini'     => 0,
+            'mendatang'    => 0,
+            'menunggu'     => 0,
+            'dikonfirmasi' => 0,
+            'selesai'      => 0,
+            'dibatalkan'   => 0,
+        ];
     }
 }

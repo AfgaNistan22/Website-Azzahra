@@ -67,12 +67,14 @@ Route::get('/login', [AuthController::class, 'login'])
     ->name('login');
 
 Route::post('/login', [AuthController::class, 'authenticate'])
+    ->middleware('throttle:6,1')
     ->name('login.process');
 
 Route::get('/register', [AuthController::class, 'showRegister'])
     ->name('register');
 
 Route::post('/register', [AuthController::class, 'register'])
+    ->middleware('throttle:5,1')
     ->name('register.store');
 
 // Login / daftar dengan Google dan Facebook (hanya untuk tamu)

@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Models\KategoriPerawatan;
+use App\Models\Pembayaran;
 use App\Models\Reservasi;
+use App\Observers\PembayaranObserver;
 use App\Observers\ReservasiObserver;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
@@ -42,6 +44,7 @@ class AppServiceProvider extends ServiceProvider
         */
 
         Reservasi::observe(ReservasiObserver::class);
+        Pembayaran::observe(PembayaranObserver::class);
 
         /*
         |--------------------------------------------------------------------------

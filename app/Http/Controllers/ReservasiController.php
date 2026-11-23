@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
+use App\Services\PenjadwalanReservasi;
 
 class ReservasiController extends Controller
 {
@@ -36,11 +37,11 @@ class ReservasiController extends Controller
     private const TOLERANSI_BENTROK = 15;
 
     /**
-     * Jam operasional salon.
+     * Jam operasional salon (disinkronkan dengan PenjadwalanReservasi).
      */
-    private const JAM_BUKA = '08:00';
+    private const JAM_BUKA = PenjadwalanReservasi::JAM_BUKA;
 
-    private const JAM_TUTUP = '17:00';
+    private const JAM_TUTUP = PenjadwalanReservasi::JAM_TUTUP;
 
 
     /**

@@ -26,3 +26,8 @@ Schedule::command('laporan:bulanan --lalu --final')
 Schedule::command('promo:nonaktifkan-kedaluwarsa')
     ->dailyAt('00:01')
     ->withoutOverlapping();
+
+// Setiap 30 menit: batalkan booking yang tidak dibayar dalam batas toleransi (2 jam)
+Schedule::command('booking:batalkan-kedaluwarsa')
+    ->everyThirtyMinutes()
+    ->withoutOverlapping();
