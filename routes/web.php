@@ -395,6 +395,12 @@ Route::middleware(['auth', 'admin'])->group(function () {
         'master' => 'laporan_master'
     ]);
 
+    Route::patch('/pembayaran/{pembayaran}/verifikasi', [PembayaranController::class, 'verifikasi'])
+        ->name('pembayaran.verifikasi');
+
+    Route::patch('/pembayaran/{pembayaran}/tolak', [PembayaranController::class, 'tolak'])
+        ->name('pembayaran.tolak');
+
     Route::resource('pembayaran', PembayaranController::class);
 
     Route::resource('pengeluaran', PengeluaranController::class);

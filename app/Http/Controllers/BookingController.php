@@ -285,10 +285,10 @@ class BookingController extends Controller
                     'jumlah'                => $totalAsli - $diskon,
                     'bukti_bayar'           => $path,
                     'catatan'               => $catatan,
-                    'status'                => 'Lunas',          // langsung lunas, tanpa verifikasi admin
+                    'status'                => 'Menunggu', // Menunggu verifikasi admin, tidak langsung lunas
                 ]);
 
-                $reservasi->update(['status' => 'Dikonfirmasi']); // langsung terkonfirmasi
+                // Reservasi tetap berstatus 'Menunggu' hingga diverifikasi oleh admin
 
                 return ['diproses' => true, 'buktiLama' => $buktiLama];
             });
@@ -321,7 +321,7 @@ class BookingController extends Controller
             Storage::disk('public')->delete($hasil['buktiLama']);
         }
 
-        $pesan = 'Pembayaran berhasil dikirim. Booking ' . $booking->kode_reservasi . ' langsung terkonfirmasi.';
+        $pesan = 'Bukti pembayaran berhasil diunggah. Booking ' . $booking->kode_reservasi . ' sedang menunggu verifikasi dari admin.';
 
         if ($diskon > 0) {
             $pesan .= ' Diskon promo Rp' . number_format($diskon, 0, ',', '.') . ' sudah diterapkan.';

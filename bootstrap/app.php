@@ -1,3 +1,4 @@
+
 <?php
 
 use App\Http\Middleware\AdminMiddleware;
@@ -17,6 +18,9 @@ return Application::configure(basePath: dirname(__DIR__))
             'admin' => AdminMiddleware::class,
             'pelanggan' => PelangganMiddleware::class,
         ]);
+
+        // Konfigurasi HTTPS untuk Railway
+        $middleware->trustProxies(at: '*');
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

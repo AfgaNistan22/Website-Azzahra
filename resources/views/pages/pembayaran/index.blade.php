@@ -627,6 +627,18 @@
                                             <i class="fas fa-clock"></i> Menunggu
                                         </span>
 
+                                        @if($pembayaran->bukti_bayar)
+                                            <div class="mt-1">
+                                                <span class="badge badge-primary px-2 py-1 font-weight-normal" style="font-size: 11px;">
+                                                    <i class="fas fa-file-invoice mr-1"></i> Ada Bukti
+                                                </span>
+                                            </div>
+                                        @else
+                                            <div class="mt-1">
+                                                <small class="text-muted" style="font-size: 10px;">Belum Unggah</small>
+                                            </div>
+                                        @endif
+
                                     @elseif($pembayaran->status === 'Dibatalkan')
 
                                         <span class="status-badge-elite status-danger-elite">

@@ -1940,19 +1940,27 @@ class ReservasiController extends Controller
             /**
              * Cek pembayaran.
              */
-            if (
-                !$reservasi->pembayaran ||
-                $reservasi->pembayaran->status !== 'Lunas'
-            ) {
-
+            if (!$reservasi->pembayaran) {
                 DB::rollBack();
+                return redirect()->back()->with('error', 'Reservasi belum memiliki data pembayaran.');
+            }
 
-                return redirect()
-                    ->back()
-                    ->with(
-                        'error',
-                        'Reservasi belum dapat dikonfirmasi karena pembayaran belum lunas.'
-                    );
+            if ($reservasi->pembayaran->status !== 'Lunas') {
+                if ($reservasi->pembayaran->bukti_bayar) {
+                    // Verifikasi pembayaran sekaligus konfirmasi reservasi
+                    $reservasi->pembayaran->update([
+                        'status'        => 'Lunas',
+                        'tanggal_bayar' => $reservasi->pembayaran->tanggal_bayar ?? now()->toDateString(),
+                    ]);
+                } else {
+                    DB::rollBack();
+                    return redirect()
+                        ->back()
+                        ->with(
+                            'error',
+                            'Reservasi belum dapat dikonfirmasi karena pelanggan belum mengunggah bukti pembayaran.'
+                        );
+                }
             }
 
 

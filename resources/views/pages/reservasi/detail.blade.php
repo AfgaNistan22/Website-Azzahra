@@ -662,6 +662,24 @@
 
                         </div>
 
+                        @if($data->pembayaran->bukti_bayar)
+                            <div class="mt-3 p-3 rounded" style="background:#fcf9f9; border: 1px solid #f0e6e8;">
+                                <div class="d-flex align-items-center justify-content-between flex-wrap">
+                                    <div>
+                                        <span class="font-weight-bold text-dark"><i class="fas fa-file-invoice mr-1 text-gold-elite"></i> Bukti Transfer Pelanggan</span>
+                                        <div class="small text-muted">Berkas bukti pembayaran yang diunggah pelanggan</div>
+                                    </div>
+                                    <div class="mt-2 mt-md-0">
+                                        <a href="{{ \Illuminate\Support\Facades\Storage::url($data->pembayaran->bukti_bayar) }}" target="_blank" class="btn btn-sm btn-outline-secondary">
+                                            <i class="fas fa-external-link-alt mr-1"></i> Buka Bukti
+                                        </a>
+                                        <a href="{{ route('pembayaran.show', $data->pembayaran->id) }}" class="btn btn-sm btn-primary ml-1">
+                                            <i class="fas fa-check-circle mr-1"></i> Periksa &amp; Verifikasi
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
 
                         {{-- TOMBOL PEMBAYARAN --}}
                         <div class="mt-3">

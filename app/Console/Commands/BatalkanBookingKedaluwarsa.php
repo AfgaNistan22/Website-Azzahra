@@ -11,52 +11,20 @@ use Throwable;
 
 class BatalkanBookingKedaluwarsa extends Command
 {
-    protected $signature = 'booking:batalkan-kedaluwarsa {--jam=2 : Batas toleransi jam sebelum dibatalkan otomatis}';
+    protected $signature = 'booking:batalkan-kedaluwarsa {--jam=2 : Batas toleransi jam tanpa pembayaran}';
 
-    protected $description = 'Membatalkan reservasi yang belum dibayar setelah melewati batas waktu toleransi';
+    protected $description = 'Membatalkan reservasi berstatus Menunggu yang telah melewati tanggal reservasi atau belum dibayar';
 
     public function handle(): int
     {
         $jam = max(1, (int) $this->option('jam'));
-        $batasWaktu = Carbon::now()->subHours($jam);
 
-        $this->info("Memeriksa booking menunggu yang dibuat sebelum {$batasWaktu->toDateTimeString()}...");
+        $this->info("Memeriksa reservasi berstatus Menunggu yang kedaluwarsa...");
 
         try {
-            // Ambil reservasi berstatus Menunggu yang pembayarannya belum lunas dan belum ada bukti bayar
-            $reservasiKedaluwarsa = Reservasi::where('status', 'Menunggu')
-                ->where('created_at', '<=', $batasWaktu)
-                ->whereHas('pembayaran', function ($q) {
-                    $q->where('status', 'Menunggu')
-                      ->whereNull('bukti_bayar');
-                })
-                ->with('pembayaran')
-                ->get();
+            $total = self::batalkanOtomatis($jam);
 
-            $total = 0;
-
-            foreach ($reservasiKedaluwarsa as $reservasi) {
-                DB::transaction(function () use ($reservasi, $jam) {
-                    $alasan = "Dibatalkan otomatis oleh sistem (tidak ada bukti pembayaran dalam {$jam} jam).";
-
-                    $reservasi->update([
-                        'status'          => 'Dibatalkan',
-                        'alasan_batal'    => $alasan,
-                        'dibatalkan_pada' => now(),
-                    ]);
-
-                    if ($reservasi->pembayaran) {
-                        $reservasi->pembayaran->update([
-                            'status'  => 'Dibatalkan',
-                            'catatan' => $alasan,
-                        ]);
-                    }
-                });
-
-                $total++;
-            }
-
-            $this->info("Berhasil membatalkan {$total} reservasi kedaluwarsa.");
+            $this->info("Selesai: {$total} reservasi berhasil dibatalkan otomatis.");
 
             return self::SUCCESS;
 
@@ -71,5 +39,88 @@ class BatalkanBookingKedaluwarsa extends Command
 
             return self::FAILURE;
         }
+    }
+
+    /**
+     * Membatalkan seluruh reservasi kedaluwarsa:
+     * 1. Melewati tanggal reservasi (tanggal < hari ini ATAU tanggal == hari ini dan jam_mulai sudah lewat).
+     * 2. Melewati batas waktu toleransi pembayaran (default 2 jam tanpa bukti bayar).
+     *
+     * @return int Jumlah reservasi yang dibatalkan
+     */
+    public static function batalkanOtomatis(int $jam = 2): int
+    {
+        $now        = Carbon::now('Asia/Jakarta');
+        $today      = $now->toDateString();
+        $currentTime = $now->format('H:i:s');
+        $batasWaktu = $now->copy()->subHours($jam);
+
+        $total = 0;
+
+        // Skenario 1: Reservasi Menunggu yang jadwalnya sudah lewat dari sekarang
+        $lewatJadwal = Reservasi::where('status', 'Menunggu')
+            ->where(function ($q) use ($today, $currentTime) {
+                $q->whereDate('tanggal', '<', $today)
+                  ->orWhere(function ($q2) use ($today, $currentTime) {
+                      $q2->whereDate('tanggal', '=', $today)
+                         ->where('jam_mulai', '<=', $currentTime);
+                  });
+            })
+            ->with('pembayaran')
+            ->get();
+
+        foreach ($lewatJadwal as $res) {
+            DB::transaction(function () use ($res) {
+                $alasan = 'Dibatalkan otomatis oleh sistem: Melewati jadwal reservasi yang dipesan.';
+
+                $res->update([
+                    'status'          => 'Dibatalkan',
+                    'alasan_batal'    => $alasan,
+                    'dibatalkan_pada' => now(),
+                ]);
+
+                if ($res->pembayaran && $res->pembayaran->status !== 'Lunas') {
+                    $res->pembayaran->update([
+                        'status'  => 'Dibatalkan',
+                        'catatan' => $alasan,
+                    ]);
+                }
+            });
+
+            $total++;
+        }
+
+        // Skenario 2: Reservasi Menunggu yang belum ada bukti bayar dan sudah lewat batas jam
+        $tanpaBukti = Reservasi::where('status', 'Menunggu')
+            ->where('created_at', '<=', $batasWaktu)
+            ->whereHas('pembayaran', function ($q) {
+                $q->where('status', 'Menunggu')
+                  ->whereNull('bukti_bayar');
+            })
+            ->with('pembayaran')
+            ->get();
+
+        foreach ($tanpaBukti as $res) {
+            DB::transaction(function () use ($res, $jam) {
+                $alasan = "Dibatalkan otomatis oleh sistem: Bukti pembayaran tidak diunggah dalam batas {$jam} jam.";
+
+                $res->update([
+                    'status'          => 'Dibatalkan',
+                    'alasan_batal'    => $alasan,
+                    'dibatalkan_pada' => now(),
+                ]);
+
+                if ($res->pembayaran && $res->pembayaran->status !== 'Lunas') {
+                    $res->pembayaran->update([
+                        'status'  => 'Dibatalkan',
+                        'catatan' => $alasan,
+                    ]);
+                }
+            });
+
+            $total++;
+        }
+
+        return $total;
     }
 }

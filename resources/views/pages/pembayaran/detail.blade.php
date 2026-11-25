@@ -411,6 +411,95 @@
             </div>
 
 
+            {{-- ================= BUKTI PEMBAYARAN & VERIFIKASI ================= --}}
+            <div class="card-elite mb-4">
+                <div class="card-body p-4">
+                    <div class="section-head-elite mb-3">
+                        <div class="section-icon-elite icon-gold-elite">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                        </div>
+                        <div>
+                            <h6 class="section-title-elite">Bukti Pembayaran &amp; Verifikasi Admin</h6>
+                            <small class="section-subtitle-elite">Pemeriksaan bukti transfer yang diunggah pelanggan</small>
+                        </div>
+                    </div>
+
+                    @if($data->bukti_bayar)
+                        <div class="p-3 mb-3 rounded" style="background:#fcf9f9; border: 1px solid #f0e6e8;">
+                            <div class="row align-items-center">
+                                <div class="col-md-5 text-center mb-3 mb-md-0">
+                                    @php
+                                        $ext = strtolower(pathinfo($data->bukti_bayar, PATHINFO_EXTENSION));
+                                        $fileUrl = \Illuminate\Support\Facades\Storage::url($data->bukti_bayar);
+                                    @endphp
+
+                                    @if(in_array($ext, ['jpg', 'jpeg', 'png', 'webp']))
+                                        <a href="{{ $fileUrl }}" target="_blank" title="Klik untuk memperbesar">
+                                            <img src="{{ $fileUrl }}" alt="Bukti Pembayaran" class="img-fluid rounded shadow-sm" style="max-height: 220px; object-fit: contain;">
+                                        </a>
+                                    @else
+                                        <div class="p-4 bg-light rounded text-center">
+                                            <i class="fas fa-file-pdf fa-3x text-danger mb-2"></i>
+                                            <div class="font-weight-bold">Berkas Bukti (PDF)</div>
+                                        </div>
+                                    @endif
+                                    <div class="mt-2">
+                                        <a href="{{ $fileUrl }}" target="_blank" class="btn btn-sm btn-outline-secondary">
+                                            <i class="fas fa-external-link-alt mr-1"></i> Buka Ukuran Penuh
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-md-7">
+                                    <h6 class="font-weight-bold text-dark mb-2">Status Pemeriksaan:</h6>
+                                    @if($data->status === 'Lunas')
+                                        <div class="badge badge-success px-3 py-2 font-weight-normal mb-3" style="font-size: 13px;">
+                                            <i class="fas fa-check-circle mr-1"></i> Telah Diverifikasi &amp; LUNAS
+                                        </div>
+                                        <p class="text-muted small mb-0">Pembayaran ini sudah disetujui dan telah tercatat pada laporan pemasukan salon.</p>
+                                    @else
+                                        <div class="badge badge-warning px-3 py-2 font-weight-normal mb-3" style="font-size: 13px;">
+                                            <i class="fas fa-clock mr-1"></i> Menunggu Verifikasi Admin
+                                        </div>
+                                        <p class="text-muted small mb-3">
+                                            Periksa keaslian bukti transfer di samping (nominal, rekening tujuan, tanggal transfer).
+                                            Jika valid, klik tombol <strong>Verifikasi Lunas</strong>. Jika palsu atau tidak sesuai, klik <strong>Tolak Bukti</strong>.
+                                        </p>
+
+                                        <div class="d-flex flex-wrap gap-2">
+                                            <form action="{{ route('pembayaran.verifikasi', $data->id) }}" method="POST" class="mr-2 mb-2" onsubmit="return confirm('Konfirmasi pembayaran ini sebagai LUNAS? Reservasi otomatis akan DIKONFIRMASI.');">
+                                                @csrf
+                                                @method('PATCH')
+                                                <button type="submit" class="btn btn-success px-3">
+                                                    <i class="fas fa-check-circle mr-1"></i> Verifikasi Lunas
+                                                </button>
+                                            </form>
+
+                                            <button type="button" class="btn btn-outline-danger px-3 mb-2" data-toggle="collapse" data-target="#formTolakBukti">
+                                                <i class="fas fa-times-circle mr-1"></i> Tolak Bukti
+                                            </button>
+                                        </div>
+
+                                        <div class="collapse mt-3" id="formTolakBukti">
+                                            <form action="{{ route('pembayaran.tolak', $data->id) }}" method="POST" class="p-3 border rounded bg-white">
+                                                @csrf
+                                                @method('PATCH')
+                                                <label class="small font-weight-bold">Alasan Penolakan Bukti:</label>
+                                                <input type="text" name="alasan" class="form-control form-control-sm mb-2" placeholder="Contoh: Bukti buram / nominal tidak sesuai / bukan struk Azzahra" required>
+                                                <button type="submit" class="btn btn-sm btn-danger">Kirim Penolakan</button>
+                                            </form>
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    @else
+                        <div class="alert alert-light border mb-0 text-muted">
+                            <i class="fas fa-info-circle mr-1"></i> Belum ada bukti transfer yang diunggah oleh pelanggan.
+                        </div>
+                    @endif
+                </div>
+            </div>
+
             {{-- INFORMASI RESERVASI --}}
             <div class="card-elite mb-4">
 

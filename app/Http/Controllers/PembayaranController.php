@@ -917,4 +917,76 @@ class PembayaranController extends Controller
                 ->with('error', 'Laporan pembayaran gagal dibuat: ' . $e->getMessage());
         }
     }
+
+    /**
+     * Verifikasi bukti pembayaran oleh Admin.
+     * Mengubah status pembayaran menjadi Lunas dan reservasi menjadi Dikonfirmasi.
+     */
+    public function verifikasi(Pembayaran $pembayaran)
+    {
+        try {
+            DB::transaction(function () use ($pembayaran) {
+                $pembayaran->update([
+                    'status'        => 'Lunas',
+                    'tanggal_bayar' => $pembayaran->tanggal_bayar ?? now()->toDateString(),
+                ]);
+
+                if ($pembayaran->reservasi && $pembayaran->reservasi->status !== 'Selesai') {
+                    $pembayaran->reservasi->update(['status' => 'Dikonfirmasi']);
+                }
+            });
+
+            return redirect()
+                ->back()
+                ->with('success', 'Pembayaran berhasil diverifikasi sebagai LUNAS dan reservasi otomatis DIKONFIRMASI.');
+
+        } catch (\Throwable $e) {
+            Log::error('Gagal memverifikasi pembayaran: ' . $e->getMessage());
+
+            return redirect()
+                ->back()
+                ->with('error', 'Gagal memverifikasi pembayaran: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Tolak bukti pembayaran oleh Admin (misal gambar palsu/tidak valid).
+     */
+    public function tolak(Request $request, Pembayaran $pembayaran)
+    {
+        $request->validate([
+            'alasan' => ['nullable', 'string', 'max:255'],
+        ]);
+
+        try {
+            $alasan = $request->input('alasan') ?: 'Bukti pembayaran tidak valid / tidak sesuai.';
+
+            DB::transaction(function () use ($pembayaran, $alasan) {
+                if ($pembayaran->bukti_bayar) {
+                    \Illuminate\Support\Facades\Storage::disk('public')->delete($pembayaran->bukti_bayar);
+                }
+
+                $pembayaran->update([
+                    'bukti_bayar' => null,
+                    'status'      => 'Menunggu',
+                    'catatan'     => trim(($pembayaran->catatan ? $pembayaran->catatan . ' | ' : '') . 'Bukti ditolak: ' . $alasan),
+                ]);
+
+                if ($pembayaran->reservasi && $pembayaran->reservasi->status === 'Dikonfirmasi') {
+                    $pembayaran->reservasi->update(['status' => 'Menunggu']);
+                }
+            });
+
+            return redirect()
+                ->back()
+                ->with('success', 'Bukti pembayaran berhasil ditolak. Pelanggan dapat mengunggah bukti pembayaran yang valid.');
+
+        } catch (\Throwable $e) {
+            Log::error('Gagal menolak pembayaran: ' . $e->getMessage());
+
+            return redirect()
+                ->back()
+                ->with('error', 'Gagal menolak pembayaran: ' . $e->getMessage());
+        }
+    }
 }
